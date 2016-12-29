@@ -1,0 +1,20 @@
+<view class="container">
+    <view class="kevent-body kevent-body{{kevent.category}}">
+        <view class="kevent-title">
+            <view class="kevent-title-text">{{kevent.title}}</view>
+            <view class="kevent-title-difficulty">{{category_array[kevent.category]}}</view>
+        </view>
+        <view class="kevent-desc">参与人数: {{kevent.count}}</view>
+        <view class="kevent-time">已加入清单{{day_count}}天</view>
+    </view>
+
+    <view class="btn-area">
+        <button bindtap="tapJoin" type="primary">参加</button>
+    </view>
+    <view class="btn-area">
+        <button bindtap="tapEdit" type="default">修改</button>
+    </view>
+    <view class="btn-area">
+        <button bindtap="tapDelete" type="warn">删除</button>
+    </view>   
+</view>

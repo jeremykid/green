@@ -1,0 +1,14 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/publisher/publisher",
+        "pages/message/message",
+        "pages/profile/profile",
+        "pages/detail/detail",
+        "pages/join/join"
+    ],
+    "window": {
+        "navigationBarTitleText": "成就"
+    },
+    "debug":true
+}

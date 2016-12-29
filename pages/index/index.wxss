@@ -1,0 +1,156 @@
+/**index.wxss**/
+.index-header {
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1rpx solid rgb(209, 209, 209);
+    z-index:100;
+    top:0px;
+    background-color:rgba(255,255,255,0.96);
+    height:4rem;
+    position:fixed;
+}
+
+.head-photo-name {
+    display:flex;
+}
+
+.head-photo {
+    margin-left:1rem;
+    width:100rpx;
+    height:100rpx;
+    border-radius:100rpx;
+    margin-right:20rpx;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:auto;
+}
+
+.head-name {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    text-align:left;
+}
+
+.name {
+    display:block;
+}
+
+.name-qmd {
+    font-size:26rpx;
+    color:#a1a1a1;
+    display:block;
+}
+
+.head-message {
+    margin-right:1rem;
+    display:flex;
+    align-items:center;
+    width:80rpx;
+    height:60rpx;
+    text-align:center;
+    justify-content:center;
+    border-width:2rpx;
+    border-style:solid;
+    border-color:rgb(227, 227, 227);
+    border-radius:4rpx;
+    position:relative;
+}
+
+.message-mail {
+    width:36rpx;
+    height:28rpx;
+}
+
+.message-bubble {
+    position:absolute;
+    right:-9px;
+    top:-10px;
+    font-size:10px;
+    width:18px;
+    height:18px;
+    line-height:18px;
+    border-radius:20px;
+    background-color:rgb(255, 0, 46);
+    color:rgb(255, 255, 255);
+}
+
+.publisher-button {
+    width: 60px; 
+    height: 60px; 
+    display: flex; 
+    background-color: rgba(242, 242, 242, 0.909804); 
+    border-radius: 40px; 
+    align-items: center; 
+    justify-content: center; 
+    position: fixed; 
+    bottom: 14px; 
+    right: 30px; 
+    z-index: 10; 
+}
+
+.achievement-list {
+    margin-top:4rem;
+    padding: 20rpx;
+}
+
+.achievement-body {
+    margin-bottom: 30rpx;
+    border-radius: 10rpx;
+    border-width:2rpx;
+    border-style:solid;
+}
+
+.achievement-body0 {
+    border-color:rgb(227, 227, 227);
+    background: linear-gradient(to right, rgb(180,180,180), rgb(150,150,150));
+    color: white;
+}
+
+.achievement-body1 {
+    border-color:blue;
+    background: linear-gradient(to right, rgb(0,123,187), rgb(0,122,176));
+    color:white;
+}
+
+.achievement-body2 {
+    border-color:purple;
+    background: linear-gradient(to right, #7d5886, #63434f);
+    color:white;
+}
+
+.achievement-body3 {
+    border-color:orange;
+    background: linear-gradient(to right, #f36c21,#f15a22);
+    color:white;
+}
+
+.achievement-title {
+    margin:1rem;
+    display:flex;
+    justify-content:space-between;
+}
+
+.achievement-title-text {
+}
+
+.achievement-title-difficulty {
+    font-size:25rpx;
+    color:rgba(255,255,255,0.3)
+}
+
+.achievement-desc {
+    margin-top:20rpx;
+    font-size:30rpx;
+    margin-left:1rem;
+}
+
+.achievement-time {
+    margin-top:40rpx;
+    margin-left:1rem;
+    font-size:25rpx;
+    color:white;
+    margin-bottom:30rpx;
+}

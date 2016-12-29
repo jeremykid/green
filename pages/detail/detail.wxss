@@ -1,0 +1,63 @@
+.kevent-body {
+    margin:10rpx;
+    margin-bottom: 30rpx;
+    border-radius: 10rpx;
+    border-width:2rpx;
+    border-style:solid;
+}
+
+.kevent-body0 {
+    border-color:rgb(227, 227, 227);
+    background: linear-gradient(to right, rgb(180,180,180), rgb(150,150,150));
+    color: white;
+}
+
+.kevent-body1 {
+    border-color:blue;
+    background: linear-gradient(to right, rgb(0,123,187), rgb(0,122,176));
+    color:white;
+}
+
+.kevent-body2 {
+    border-color:purple;
+    background: linear-gradient(to right, #7d5886, #63434f);
+    color:white;
+}
+
+.kevent-body3 {
+    border-color:orange;
+    background: linear-gradient(to right, #f36c21,#f15a22);
+    color:white;
+}
+
+.kevent-title {
+    margin:1rem;
+    display:flex;
+    justify-content:space-between;
+}
+
+.kevent-title-text {
+}
+
+.kevent-title-difficulty {
+    font-size:25rpx;
+    color:rgba(255,255,255,0.3)
+}
+
+.kevent-desc {
+    margin-top:20rpx;
+    font-size:30rpx;
+    margin-left:1rem;
+}
+
+.kevent-time {
+    margin-top:40rpx;
+    margin-left:1rem;
+    font-size:25rpx;
+    color:white;
+    margin-bottom:30rpx;
+}
+
+.btn-area {
+    margin:20rpx;
+}

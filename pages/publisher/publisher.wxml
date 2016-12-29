@@ -1,0 +1,32 @@
+<!--index.wxml-->
+<view class="container">
+    <loading hidden="{{!loading}}">保存中</loading>
+    <view class="section">
+        <form bindsubmit="formSubmit" bindreset="formReset">
+            <view class="input_section">
+                <input auto-focus placeholder="标题" value="{{title}}" name="title">{{title}}</input>
+            </view>
+            <view class="input_section">
+                <input placeholder="人数" value="{{count}}" type="number" name="count"></input>
+            </view>
+            <view class="input_section">
+                <view class="input_title">活动类型</view>
+                <picker bindchange="catePickerChange" value="{{category_index}}" range="{{category_array}}" name="category">
+                    <view class="picker">{{category_array[category_index]}}</view>
+                </picker>
+            </view>
+            <view class="input_section">
+                <view class="input_title">位置信息</view>
+                <view class="switch_section">
+                    <view class="switch_text">
+                        允许被附近人看见
+                    </view>
+                    <switch checked="{{isLBS}}" bindchange="switchChange" name="isLBS"/>
+                </view>
+            </view>
+            <view class="btn-area">
+                <button formType="submit" type="primary">保存</button>
+            </view>
+        </form>
+    </view>
+</view>

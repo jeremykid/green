@@ -1,0 +1,31 @@
+<view class="container">
+    <loading hidden="{{!loading}}">载入中</loading>
+    <view class="index-header">
+        <view class="head-photo-name">
+            <navigator url="../profile/profile">
+                <image class="head-photo" src="{{userInfo.avatarUrl}}"></image>
+            </navigator>
+            <view class="head-name">
+                <text class="name">{{userInfo.nickName}}</text>
+                <text class="name-qmd">好好学习天天向上</text>
+            </view>
+        </view>
+        <navigator class="head-message wx-navigator_2zAN7l" url="../message/message">
+            <image class="message-mail" src="../../image/mail.png"></image>
+            <text class="message-bubble">5</text>
+        </navigator>
+    </view>
+    <view class="achievement-list">
+        <view wx:for="{{kevents}}">
+            <navigator class="achievement-body achievement-body{{item.category}}" url="../detail/detail?id={{item.objectId}}">
+                <view class="achievement-title">
+                    <view class="achievement-title-text">{{item.title}}</view>
+                    <view class="achievement-title-difficulty">{{category_array[item.category]}}</view>
+                </view>
+                <view class="achievement-desc">人数:{{item.count}}</view>
+                <view class="achievement-time">{{item.createdAt}}发布</view>
+            </navigator>
+        </view>
+    </view>
+    <navigator url="../publisher/publisher"><view class="publisher-button">+</view></navigator>
+</view>

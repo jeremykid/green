@@ -1,0 +1,11 @@
+/**app.wxss**/
+.container {
+  height:100%;
+  margin:0;
+}
+
+/**在这里必须设置 height: 100%，否则加载更多数据的时候会有问题**/
+page {
+	height: 100%;
+	width: 100%;
+}

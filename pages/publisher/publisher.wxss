@@ -1,0 +1,37 @@
+.input_section {
+    display:block;
+    margin-top:50rpx;
+    margin-bottom:30rpx;
+    margin-left:40rpx;
+    margin-right:40rpx;
+    text-align:left;
+}
+
+.switch_section {
+    align-items:center;
+    display:flex;
+    justify-content:space-between;
+}
+
+.switch_text {
+    color:gray;
+}
+
+.btn-area {
+    margin-top:40rpx;
+    margin-right:60rpx;
+    margin-left:60rpx;
+}
+
+.input_title {
+    margin-bottom:20rpx;
+}
+
+.picker {
+    color:#888888;
+}
+
+
+.section {
+    height:500rpx;
+}
