@@ -13,7 +13,7 @@ Page({
     onShow: function () {
         var that = this
         var now_time = new Date()
-        const user = AV.User.current();
+        const loginUser = AV.User.current();
         new AV.Query('Kevent')
             .get(that.data.id)
             .then(kevent => that.setData({
