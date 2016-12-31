@@ -42,6 +42,6 @@ Page({
     tapJoin: function() {
         //var that= this;
         console.log('tapJoin');
-        wx.navigateTo({url:"/pages/join/join?id="+this.data.kevent.id})
+        wx.navigateTo({url:"/pages/join/join?kevent_id="+this.data.kevent.id})
     }
 })
