@@ -5,15 +5,19 @@ Page({
     data: {
         memo_string: '',
         kevent_id: '',
-        user_id: '',
     },
     onLoad: function(params) {
         var that = this;
         if (params.kevent_id) {
-            console.log(params.kevent_id);
+            that.setData({kevent_id: params.kevent_id})
         }
     },
     onShow: function() {
-        console.log(user.id);
+        //console.log(user.id);
+    },
+    formSubmit: function() {
+        var that = this
+        console.log("user_id:"+user.id);
+        console.log("kevent_id:"+that.data.kevent_id);
     }
 })

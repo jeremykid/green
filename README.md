@@ -1,4 +1,5 @@
-# green
+# kaijula
 
-2016-12-31 cheng-guan
-2016-12-31 cheng-guan 2
+==小程序
+
+==可以发起活动，团购，拼单等
