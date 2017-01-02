@@ -1,8 +1,8 @@
 <view class="container">
-    <loading hidden="{{!loading}}">提交中</loading>
+    <loading hidden="{{!loading}}">保存中</loading>
     <form bindsubmit="formSubmit" bindreset="formReset">
         <view class="input_section">
-            <textarea class="memo" placeholder="这里输入留言" auto-focus bindChange=""/>
+            <textarea class="memo" placeholder="这里输入留言" auto-focus bindChange="" name="memo"/>
         </view>
         <view class="btn-area">
             <button formType="submit" type="primary">保存</button>

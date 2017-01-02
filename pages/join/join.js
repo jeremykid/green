@@ -3,6 +3,7 @@ const user = AV.User.current();
 var app = getApp()
 Page({
     data: {
+        loading: false,
         memo_string: '',
         kevent_id: '',
     },
@@ -15,9 +16,27 @@ Page({
     onShow: function() {
         //console.log(user.id);
     },
-    formSubmit: function() {
+    formSubmit: function(e) {
         var that = this
+        that.setData({loading:true})
         console.log("user_id:"+user.id);
         console.log("kevent_id:"+that.data.kevent_id);
+        console.log("memo:"+e.detail.value.memo);
+
+        var acl = new AV.ACL();
+        acl.setPublicReadAccess(true);
+        acl.setPublicWriteAccess(false);
+        acl.setReadAccess(AV.User.current(), true);
+        acl.setWriteAccess(AV.User.current(), true);
+
+        var targetKevent = AV.Object.createWithoutData('Kevent', that.data.kevent_id);
+        var attendee = new AV.Object('Attendee');
+        attendee.set('user', AV.User.current());
+        attendee.set('memo', e.detail.value.memo);
+        attendee.set('targetKevent', targetKevent);
+        attendee.save().then( function() {
+            that.setData({loading:false});
+            wx.navigateBack();
+        });
     }
 })

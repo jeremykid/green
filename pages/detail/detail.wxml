@@ -7,14 +7,21 @@
         <view class="kevent-desc">参与人数: {{kevent.count}}</view>
         <view class="kevent-time">已加入清单{{day_count}}天</view>
     </view>
-
     <view class="btn-area">
-        <button bindtap="tapJoin" type="primary">参加</button>
+        <button bindtap="tapJoin" type="primary">我要参加</button>
     </view>
     <view class="btn-area" wx:if ="{{kevent.user.objectId}} == loginUser.objectId" >
         <button bindtap="tapEdit" type="default">修改</button>
     </view>
     <view class="btn-area" wx:if ="{{kevent.user.objectId}} == loginUser.objectId" >
         <button bindtap="tapDelete" type="warn">删除</button>
-    </view>   
+    </view>
+    <view wx:for="{{attendees}}" class="head-photo-name">
+        <view><image class="head-photo" src="{{item.user.avatarUrl}}"></image></view>
+        <view class="head-name">
+            <text class="name">{{item.user.nickName}}</text>
+            <text class="name-qmd">{{item.memo}}</text>
+            <text class="attend-time">{{item.createdAt}}</text>
+        </view>
+    </view>
 </view>

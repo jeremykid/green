@@ -1,4 +1,5 @@
 const AV = require('../../utils/av-weapp.js')
+var util = require('../../utils/util.js')
 var app = getApp()
 Page({
     data: {
@@ -6,6 +7,7 @@ Page({
         id: '',
         kevent: {},
         process: [],
+        attendees: [],
     },
     onLoad: function (params) {
         this.setData({id: params.id, category_array: app.category_array})
@@ -20,6 +22,29 @@ Page({
                 kevent:kevent,
                 day_count: ((now_time - kevent.createdAt)/1000/3600/24|0)
             }))
+            .then(function(){
+                var query = new AV.Query('Attendee');
+                query.include('user');
+                query.equalTo('targetKevent', that.data.kevent);
+                query.descending('createdAt');
+                query.find().then(function(attendees) {
+                    var attendee_array = [];
+                    for (var i=0; i<attendees.length; i++) {
+                        attendee_array.push({
+                            'memo': attendees[i].get('memo'),
+                            'createdAt': util.formatTime2(attendees[i].get('createdAt')),
+                            'user': {
+                                'nickName': attendees[i].get('user').get('nickName'),
+                                'avatarUrl': attendees[i].get('user').get('avatarUrl'),
+                            }
+                        });
+                        console.log(attendees[i].get('user').get('avatarUrl'));
+                    }
+                    that.setData({
+                        attendees: attendee_array
+                    });
+                });
+            })
             .catch(console.error);
     },
     tapDelete: function () {

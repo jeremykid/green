@@ -61,3 +61,35 @@
 .btn-area {
     margin:20rpx;
 }
+
+.head-photo {
+    margin-left:1rem;
+    width:100rpx;
+    height:100rpx;
+    border-radius:100rpx;
+    margin-right:20rpx;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:auto;
+}
+
+.head-photo-name {
+    display:flex;
+}
+
+.head-name {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    text-align:left;
+}
+
+.name {
+    display:block;
+}
+
+.name-qmd {
+    font-size:26rpx;
+    color:#a1a1a1;
+    display:block;
+}
