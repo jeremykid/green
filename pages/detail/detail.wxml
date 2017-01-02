@@ -10,10 +10,10 @@
     <view class="btn-area">
         <button bindtap="tapJoin" type="primary">我要参加</button>
     </view>
-    <view class="btn-area" wx:if ="{{kevent.user.objectId}} == loginUser.objectId" >
+    <view class="btn-area" wx:if ="{{kevent.user.objectId == loginUser.objectId}}" >
         <button bindtap="tapEdit" type="default">修改</button>
     </view>
-    <view class="btn-area" wx:if ="{{kevent.user.objectId}} == loginUser.objectId" >
+    <view class="btn-area" wx:if ="{{kevent.user.objectId == loginUser.objectId}}" >
         <button bindtap="tapDelete" type="warn">删除</button>
     </view>
     <view wx:for="{{attendees}}" class="head-photo-name">

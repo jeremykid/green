@@ -74,6 +74,7 @@
 }
 
 .head-photo-name {
+    margin:10rpx;
     display:flex;
 }
 
@@ -90,6 +91,12 @@
 
 .name-qmd {
     font-size:26rpx;
+    color:#a1a1a1;
+    display:block;
+}
+
+.attend-time {
+    font-size:20rpx;
     color:#a1a1a1;
     display:block;
 }

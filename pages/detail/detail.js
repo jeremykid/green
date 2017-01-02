@@ -8,6 +8,7 @@ Page({
         kevent: {},
         process: [],
         attendees: [],
+        loginUser: {},
     },
     onLoad: function (params) {
         this.setData({id: params.id, category_array: app.category_array})
@@ -16,13 +17,18 @@ Page({
         var that = this
         var now_time = new Date()
         const loginUser = AV.User.current();
+        
+        console.log("loginuser:"+loginUser.id);
+
         new AV.Query('Kevent')
             .get(that.data.id)
-            .then(kevent => that.setData({
+            .then(kevent => that.setData({                
                 kevent:kevent,
+                loginUser:loginUser,
                 day_count: ((now_time - kevent.createdAt)/1000/3600/24|0)
             }))
             .then(function(){
+                console.log("kevent_user:"+that.data.kevent.get('user').get('objectId'));
                 var query = new AV.Query('Attendee');
                 query.include('user');
                 query.equalTo('targetKevent', that.data.kevent);
