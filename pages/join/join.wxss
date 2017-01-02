@@ -1,0 +1,7 @@
+.input_section {
+    margin:10rpx;
+}
+
+.container {
+    margin:30rpx;
+}

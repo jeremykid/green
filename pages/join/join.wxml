@@ -2,7 +2,7 @@
     <loading hidden="{{!loading}}">提交中</loading>
     <form bindsubmit="formSubmit" bindreset="formReset">
         <view class="input_section">
-            <textarea class="memo" placeholder="" auto-focus bindChange=""/>
+            <textarea class="memo" placeholder="这里输入留言" auto-focus bindChange=""/>
         </view>
         <view class="btn-area">
             <button formType="submit" type="primary">保存</button>
