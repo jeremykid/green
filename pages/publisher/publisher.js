@@ -1,5 +1,6 @@
 const AV = require('../../utils/av-weapp.js')
 const Kevent = require('../../model/Kevent.js')
+var util = require('../../utils/util.js')
 var app = getApp()
 Page({
     data: {
@@ -10,7 +11,9 @@ Page({
         loading: false,
         isLBS: false,
         id: '',
-        kevent:{}
+        kevent:{},
+        date:util.formatTimeForDate(new Date),
+        time:util.formatTimeForTime(new Date)
     },
     onLoad: function(params) {
         var that = this
@@ -29,6 +32,8 @@ Page({
                 }))
                 .catch(console.error);
         }
+
+        console.log(Date.now.getTime()); 
     },
     formSubmit: function(e) {
         var that = this
@@ -40,7 +45,7 @@ Page({
         var count = e.detail.value.count
         var isLBS = that.data.isLBS
            
-        console.log(title)
+        console.log(title);        
         
         if(!title) {
             console.log('None')
@@ -78,7 +83,8 @@ Page({
                 count: Number(count),
                 category: Number(category),
                 isDeleted:0,
-                isLBS: isLBS
+                isLBS: isLBS,
+                expiredAt: new Date(that.data.date + ' ' + that.data.time + ':01')
             }).setACL(acl).save().then(that.setData({loading:false})).then(
                 wx.showToast({
                     title: '保存成功',
@@ -99,5 +105,15 @@ Page({
         console.log('开关发生改变，携带值为', e.detail.value)
         this.setData({isLBS: e.detail.value})
         console.log(that.data.isLBS)
+    },
+    bindDateChange:function(e){
+        this.setData({
+        date:e.detail.value
+        })
+    },
+    bindTimeChange:function(e){
+        this.setData({
+        time:e.detail.time
+        })
     }
 });

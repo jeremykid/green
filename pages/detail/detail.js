@@ -9,6 +9,7 @@ Page({
         process: [],
         attendees: [],
         loginUser: {},
+        expiredAt: {}
     },
     onLoad: function (params) {
         this.setData({id: params.id, category_array: app.category_array})
@@ -16,19 +17,21 @@ Page({
     onShow: function () {
         var that = this
         var now_time = new Date()
-        const loginUser = AV.User.current();
+        const loginUser = AV.User.current();         
         
-        console.log("loginuser:"+loginUser.id);
+        console.log("loginuser:"+loginUser.id);        
 
         new AV.Query('Kevent')
             .get(that.data.id)
             .then(kevent => that.setData({                
                 kevent:kevent,
                 loginUser:loginUser,
-                day_count: ((now_time - kevent.createdAt)/1000/3600/24|0)
+                day_count: ((now_time - kevent.createdAt)/1000/3600/24|0),                                     expiredAt: util.formatTime(kevent.get("expiredAt"))
             }))
             .then(function(){
-                console.log("kevent_user:"+that.data.kevent.get('user').get('objectId'));
+                console.log("kevent_user:"+that.data.kevent.get('user').get('objectId'));     
+                console.log("kevent_expiredAt:"+that.data.kevent.get('expiredAt'));
+                console.log("kevent_createdAt:"+that.data.kevent.get('createdAt'));
                 var query = new AV.Query('Attendee');
                 query.include('user');
                 query.equalTo('targetKevent', that.data.kevent);

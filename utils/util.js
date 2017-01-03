@@ -31,7 +31,22 @@ function formatTime2(theDate) {
   
 }
 
+function formatTimeForDate(date) {
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1
+  var day = date.getDate()  
+  return [year, month, day].map(formatNumber).join('-') 
+}
+
+function formatTimeForTime(date) {  
+  var hour = date.getHours()
+  var minute = date.getMinutes()  
+  return [hour, minute].map(formatNumber).join(':')
+}
+
 module.exports = {
   formatTime: formatTime,
-  formatTime2: formatTime2
+  formatTime2: formatTime2,
+  formatTimeForDate:formatTimeForDate,
+  formatTimeForTime:formatTimeForTime
 }

@@ -6,6 +6,7 @@
         </view>
         <view class="kevent-desc">参与人数: {{kevent.count}}</view>
         <view class="kevent-time">已加入清单{{day_count}}天</view>
+        <view class="kevent-time">过期时间: {{expiredAt}}</view>
     </view>
     <view class="btn-area">
         <button bindtap="tapJoin" type="primary">我要参加</button>
