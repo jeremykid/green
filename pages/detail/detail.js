@@ -41,7 +41,9 @@ Page({
                 query.find().then(function(attendees) {
                     var attendee_array = [];
                     for (var i=0; i<attendees.length; i++) {
-                        if (attendees[i].get('user').get('id') == loginUser.get('id')) {
+                        if (attendees[i].get('user').id == loginUser.id) {
+                            console.log("attendee:"+attendees[i].get('user').id)
+                            console.log("loginUser:"+loginUser.id)
                             that.setData({isAttend: true, myAttendeeId: attendees[i].get('objectId')})
                         }
                         attendee_array.push({
