@@ -27,6 +27,7 @@ Page({
         var that = this;
         new AV.Query('Kevent')
             .equalTo('isDeleted',0)
+            .greaterThan('expiredAt', new Date())
             .descending('createdAt')
             .find()
             .then(kevents => that.setData({ kevents: format_time(kevents) }))

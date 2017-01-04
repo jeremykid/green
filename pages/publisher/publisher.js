@@ -31,9 +31,7 @@ Page({
                     isLBS: kevent.get('isLBS')
                 }))
                 .catch(console.error);
-        }
-
-        console.log(Date.now.getTime()); 
+        }         
     },
     formSubmit: function(e) {
         var that = this
