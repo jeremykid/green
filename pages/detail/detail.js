@@ -9,7 +9,9 @@ Page({
         process: [],
         attendees: [],
         loginUser: {},
-        expiredAt: {}
+        expiredAt: {},
+        isAttend: false,
+        myAttendeeId: ''
     },
     onLoad: function (params) {
         this.setData({id: params.id, category_array: app.category_array})
@@ -39,6 +41,9 @@ Page({
                 query.find().then(function(attendees) {
                     var attendee_array = [];
                     for (var i=0; i<attendees.length; i++) {
+                        if (attendees[i].get('user').get('id') == loginUser.get('id')) {
+                            that.setData({isAttend: true, myAttendeeId: attendees[i].get('objectId')})
+                        }
                         attendee_array.push({
                             'memo': attendees[i].get('memo'),
                             'createdAt': util.formatTime2(attendees[i].get('createdAt')),
@@ -55,6 +60,18 @@ Page({
                 });
             })
             .catch(console.error);
+    },
+    tapQuit: function() {
+        var that = this;
+        var attendee = AV.Object.createWithoutData('Attendee', that.data.myAttendeeId);
+        attendee.destroy().then(function(success) {
+            console.log("删除成功");
+            that.setData({isAttend:false, myAttendeeId:''})
+            that.onShow();
+        }, function(error) {
+            console.log("删除失败");
+            that.onShow();
+        })
     },
     tapDelete: function () {
         var that = this

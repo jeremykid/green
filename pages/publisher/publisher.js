@@ -84,7 +84,7 @@ Page({
                 category: Number(category),
                 isDeleted:0,
                 isLBS: isLBS,
-                expiredAt: new Date(that.data.date + ' ' + that.data.time + ':01')
+                expiredAt: new Date(that.data.date + ' ' + that.data.time)
             }).setACL(acl).save().then(that.setData({loading:false})).then(
                 wx.showToast({
                     title: '保存成功',
