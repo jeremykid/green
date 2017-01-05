@@ -94,9 +94,11 @@ Page({
     },
     catePickerChange: function(e) {
         console.log('picker发送选择改变，携带值为', e.detail.value)
-        this.setData({
-            category_index: e.detail.value
-        })
+        if (!e.detail.value) {
+            this.setData({category_index: 0})
+        } else {
+            this.setData({category_index: e.detail.value})
+        }
     },
     switchChange: function(e) {
         var that = this
@@ -106,12 +108,14 @@ Page({
     },
     bindDateChange:function(e){
         this.setData({
-        date:e.detail.value
+            date:e.detail.value
         })
+        console.log(this.data.date)
     },
     bindTimeChange:function(e){
         this.setData({
-        time:e.detail.time
+            time:e.detail.value
         })
+        console.log(this.data.time)
     }
 });
