@@ -24,7 +24,7 @@ function formatTime2(theDate) {
   } else if (theDate.toDateString() == now_time.toDateString()) {
     return "今天"+theDate.getHours()+":"+(theDate.getMinutes()<10?'0':'')+theDate.getMinutes();
   } else if (theDate.getFullYear() == theDate.getFullYear()){
-    return (theDate.getMonth()+1)+"-"+theDate.getDate()
+    return (theDate.getMonth()+1)+"月"+theDate.getDate()+"日"
   } else {
     return theDate.getFullYear()+"-"+(theDate.getMonth()+1)+"-"+theDate.getDate()
   }

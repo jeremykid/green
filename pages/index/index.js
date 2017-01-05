@@ -1,4 +1,5 @@
 const AV = require('../../utils/av-weapp.js')
+var util = require('../../utils/util.js')
 var app = getApp()
 Page({
     data: {
@@ -26,38 +27,25 @@ Page({
     onShow:function () {
         var that = this;
         new AV.Query('Kevent')
+            .include('user')
             .equalTo('isDeleted',0)
             .greaterThan('expiredAt', new Date())            
             .descending('createdAt')
             .find()
-            .then(kevents => that.setData({ kevents: format_time(kevents) }))
+            .then(function(kevents){
+                var event_array = [];
+                for (var i=0; i<kevents.length; i++) {
+                    event_array.push({
+                        'category':kevents[i].get('category'),
+                        'objectId':kevents[i].get('objectId'),
+                        'title':kevents[i].get('title'),
+                        'count':kevents[i].get('count'),
+                        'createdAt':util.formatTime2(kevents[i].get('createdAt')),
+                        'user_nickName':kevents[i].get('user').get('nickName')
+                    });
+                }
+                that.setData({ kevents: event_array })
+            })
             .catch(console.error);
     },
 })
-
-function format_time(kevents) {
-    var now_time = new Date();
-    var newKevents = new Array();
-    for (var x in kevents) {
-        var interval = (now_time - kevents[x].createdAt)/1000;
-        if (interval < 60) {
-            kevents[x].createdAt = "刚刚";
-        } else if (interval < 3600) {
-            kevents[x].createdAt = (interval/60|0)+"分钟前";
-
-        } else if (kevents[x].createdAt.toDateString() == now_time.toDateString()) {
-            kevents[x].createdAt = "今天"+kevents[x].createdAt.getHours()+":"+(kevents[x].createdAt.getMinutes()<10?'0':'')+kevents[x].createdAt.getMinutes();
-        } else if (kevents[x].createdAt.getFullYear() == now_time.getFullYear()){
-            kevents[x].createdAt = (kevents[x].createdAt.getMonth()+1)+"-"+kevents[x].createdAt.getDate()
-        } else {
-            kevents[x].createdAt = kevents[x].createdAt.getFullYear()+"-"+(kevents[x].createdAt.getMonth()+1)+"-"+kevents[x].createdAt.getDate()
-        }        
-
-        if(kevents[x].get("attendCount")<kevents[x].get("count")){
-            newKevents.push(kevents[x]);
-        }
-
-        console.log(kevents[x])
-    }
-    return newKevents
-}
