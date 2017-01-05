@@ -29,7 +29,7 @@ Page({
         new AV.Query('Kevent')
             .include('user')
             .equalTo('isDeleted',0)
-            .greaterThan('expiredAt', new Date())
+            .greaterThan('expiredAt', new Date())            
             .descending('createdAt')
             .find()
             .then(function(kevents){
@@ -49,4 +49,3 @@ Page({
             .catch(console.error);
     },
 })
-
