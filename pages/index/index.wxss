@@ -93,6 +93,7 @@
 
 .achievement-list {
     margin-top:4rem;
+    margin-top:0rpx;
     padding: 20rpx;
 }
 
@@ -153,4 +154,9 @@
     font-size:25rpx;
     color:white;
     margin-bottom:30rpx;
+}
+
+.section-title {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }

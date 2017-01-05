@@ -4,7 +4,8 @@ var app = getApp()
 Page({
     data: {
         category_array: [],
-        kevents: [],
+        my_kevents: [],
+        lbs_kevents: [],
         userInfo: {},
         title: 'title',
         loading: false
@@ -33,19 +34,32 @@ Page({
             .descending('createdAt')
             .find()
             .then(function(kevents){
-                var event_array = [];
+                var my_event_array = [];
+                var lbs_event_array = [];
                 for (var i=0; i<kevents.length; i++) {
-                    event_array.push({
-                        'category':kevents[i].get('category'),
-                        'objectId':kevents[i].get('objectId'),
-                        'title':kevents[i].get('title'),
-                        'count':kevents[i].get('count'),
-                        'attendCount':kevents[i].get('attendCount'),
-                        'createdAt':util.formatTime2(kevents[i].get('createdAt')),
-                        'user_nickName':kevents[i].get('user').get('nickName')
-                    });
+                    if (kevents[i].get('user').id == AV.User.current().id) {
+                        my_event_array.push({
+                            'category':kevents[i].get('category'),
+                            'objectId':kevents[i].get('objectId'),
+                            'title':kevents[i].get('title'),
+                            'count':kevents[i].get('count'),
+                            'attendCount':kevents[i].get('attendCount'),
+                            'createdAt':util.formatTime2(kevents[i].get('createdAt')),
+                            'user_nickName':kevents[i].get('user').get('nickName')
+                        });
+                    } else {
+                        lbs_event_array.push({
+                            'category':kevents[i].get('category'),
+                            'objectId':kevents[i].get('objectId'),
+                            'title':kevents[i].get('title'),
+                            'count':kevents[i].get('count'),
+                            'attendCount':kevents[i].get('attendCount'),
+                            'createdAt':util.formatTime2(kevents[i].get('createdAt')),
+                            'user_nickName':kevents[i].get('user').get('nickName')
+                        });
+                    }
                 }
-                that.setData({ kevents: event_array })
+                that.setData({ my_kevents: my_event_array, lbs_kevents: lbs_event_array })
             })
             .catch(console.error);
     },

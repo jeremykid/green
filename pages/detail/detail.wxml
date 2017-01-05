@@ -5,8 +5,8 @@
             <view class="kevent-title-difficulty">{{category_array[kevent.category]}}</view>
         </view>
         <view class="kevent-desc">参与人数: {{kevent.attendCount}}/{{kevent.count}}</view>
-        <view class="kevent-time">已加入清单{{day_count}}天</view>
-        <view class="kevent-time">过期时间: {{expiredAt}}</view>
+        <view class="kevent-time">已发布: {{day_count}}天</view>
+        <view class="kevent-time">到期时间: {{expiredAt}}</view>
     </view>
     <view class="btn-area" wx:if = "{{!isAttend}}">
         <button bindtap="tapJoin" type="primary">我要参加</button>
@@ -20,6 +20,7 @@
     <view class="btn-area" wx:if ="{{kevent.user.objectId == loginUser.objectId}}" >
         <button bindtap="tapDelete" type="warn">删除</button>
     </view>
+    <view class="section-title">参与名单</view>
     <view wx:for="{{attendees}}" class="head-photo-name">
         <view><image class="head-photo" src="{{item.user.avatarUrl}}"></image></view>
         <view class="head-name">

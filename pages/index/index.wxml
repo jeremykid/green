@@ -1,5 +1,6 @@
 <view class="container">
     <loading hidden="{{!loading}}">载入中</loading>
+    <!--
     <view class="index-header">
         <view class="head-photo-name">
             <navigator url="../profile/profile">
@@ -15,8 +16,21 @@
             <text class="message-bubble">5</text>
         </navigator>
     </view>
+    -->
     <view class="achievement-list">
-        <view wx:for="{{kevents}}">
+        <view class="section-title">我参与的</view>
+        <view wx:for="{{my_kevents}}">
+            <navigator class="achievement-body achievement-body{{item.category}}" url="../detail/detail?id={{item.objectId}}">
+                <view class="achievement-title">
+                    <view class="achievement-title-text">{{item.title}}</view>
+                    <view class="achievement-title-difficulty">{{category_array[item.category]}}</view>
+                </view>
+                <view class="achievement-desc">人数:{{item.attendCount}}/{{item.count}}</view>
+                <view class="achievement-time">{{item.createdAt}}由{{item.user_nickName}}发布</view>
+            </navigator>
+        </view>
+        <view class="section-title">附近的</view>
+        <view wx:for="{{lbs_kevents}}">
             <navigator class="achievement-body achievement-body{{item.category}}" url="../detail/detail?id={{item.objectId}}">
                 <view class="achievement-title">
                     <view class="achievement-title-text">{{item.title}}</view>

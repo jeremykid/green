@@ -87,16 +87,23 @@
 
 .name {
     display:block;
+    margin-bottom:10rpx;
 }
 
 .name-qmd {
     font-size:26rpx;
     color:#a1a1a1;
     display:block;
+    margin-bottom:5rpx;
 }
 
 .attend-time {
     font-size:20rpx;
     color:#a1a1a1;
     display:block;
+}
+
+.section-title {
+    margin: 20rpx;
+    margin-top: 1rem;
 }
