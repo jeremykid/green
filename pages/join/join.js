@@ -23,18 +23,18 @@ Page({
         console.log("kevent_id:"+that.data.kevent_id);
         console.log("memo:"+e.detail.value.memo);
 
-        var acl = new AV.ACL();
-        acl.setPublicReadAccess(true);
-        acl.setPublicWriteAccess(false);
-        acl.setReadAccess(AV.User.current(), true);
-        acl.setWriteAccess(AV.User.current(), true);
-
         var targetKevent = AV.Object.createWithoutData('Kevent', that.data.kevent_id);
+        
         var attendee = new AV.Object('Attendee');
         attendee.set('user', AV.User.current());
         attendee.set('memo', e.detail.value.memo);
         attendee.set('targetKevent', targetKevent);
-        attendee.save().then( function() {
+        attendee.save().then(function() {
+            targetKevent.increment('attendCount',1);
+            targetKevent.fetchWhenSave(true);
+            targetKevent.save();
+        })
+        .then( function() {
             that.setData({loading:false});
             wx.navigateBack();
         });

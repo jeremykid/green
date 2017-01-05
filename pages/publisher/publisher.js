@@ -55,11 +55,7 @@ Page({
             })
             return;
         }
-        var acl = new AV.ACL();
-        acl.setPublicReadAccess(true);
-        acl.setPublicWriteAccess(false);
-        acl.setReadAccess(AV.User.current(), true);
-        acl.setWriteAccess(AV.User.current(), true);
+
         if (that.data.id) {
             console.log("更新")
             that.data.kevent.set('title', title);
@@ -84,7 +80,7 @@ Page({
                 isLBS: isLBS,
                 expiredAt: new Date(that.data.date + ' ' + that.data.time),
                 attendCount: 0
-            }).setACL(acl).save().then(that.setData({loading:false})).then(
+            }).save().then(that.setData({loading:false})).then(
                 wx.showToast({
                     title: '保存成功',
                     icon: 'success',

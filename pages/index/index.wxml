@@ -22,7 +22,7 @@
                     <view class="achievement-title-text">{{item.title}}</view>
                     <view class="achievement-title-difficulty">{{category_array[item.category]}}</view>
                 </view>
-                <view class="achievement-desc">人数:{{item.count}}</view>
+                <view class="achievement-desc">人数:{{item.attendCount}}/{{item.count}}</view>
                 <view class="achievement-time">{{item.createdAt}}由{{item.user_nickName}}发布</view>
             </navigator>
         </view>

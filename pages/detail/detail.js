@@ -66,7 +66,13 @@ Page({
     tapQuit: function() {
         var that = this;
         var attendee = AV.Object.createWithoutData('Attendee', that.data.myAttendeeId);
-        attendee.destroy().then(function(success) {
+        attendee.destroy().then(function() {
+            var targetKevent = AV.Object.createWithoutData('Kevent', that.data.kevent.id);
+            console.log(that.data.kevent.id)
+            targetKevent.increment('attendCount', -1);
+            targetKevent.fetchWhenSave(true);
+            return targetKevent.save()
+        }).then(function(success) {
             console.log("删除成功");
             that.setData({isAttend:false, myAttendeeId:''})
             that.onShow();
