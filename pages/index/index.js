@@ -27,7 +27,7 @@ Page({
         var that = this;
         new AV.Query('Kevent')
             .equalTo('isDeleted',0)
-            .greaterThan('expiredAt', new Date())
+            .greaterThan('expiredAt', new Date())            
             .descending('createdAt')
             .find()
             .then(kevents => that.setData({ kevents: format_time(kevents) }))
@@ -37,6 +37,7 @@ Page({
 
 function format_time(kevents) {
     var now_time = new Date();
+    var newKevents = new Array();
     for (var x in kevents) {
         var interval = (now_time - kevents[x].createdAt)/1000;
         if (interval < 60) {
@@ -50,8 +51,13 @@ function format_time(kevents) {
             kevents[x].createdAt = (kevents[x].createdAt.getMonth()+1)+"-"+kevents[x].createdAt.getDate()
         } else {
             kevents[x].createdAt = kevents[x].createdAt.getFullYear()+"-"+(kevents[x].createdAt.getMonth()+1)+"-"+kevents[x].createdAt.getDate()
+        }        
+
+        if(kevents[x].get("attendCount")<kevents[x].get("count")){
+            newKevents.push(kevents[x]);
         }
+
         console.log(kevents[x])
     }
-    return kevents
+    return newKevents
 }
