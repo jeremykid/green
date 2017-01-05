@@ -96,5 +96,13 @@ Page({
         //var that= this;
         console.log('tapJoin');
         wx.navigateTo({url:"/pages/join/join?kevent_id="+this.data.kevent.id})
-    }
+    },    
+    onShareAppMessage: function () {        
+        return {
+            title: this.data.kevent.title,
+            desc: this.data.kevent.category,
+            path: '/pages/join/join?kevent_id='+this.data.kevent.id
+
+        }
+  }
 })
