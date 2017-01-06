@@ -27,8 +27,11 @@ Page({
                     id: kevent.id,
                     category_index: kevent.get('category'),
                     title: kevent.get('title'),
+                    description:kevent.get('description'),
                     count: kevent.get('count'),
-                    isLBS: kevent.get('isLBS')
+                    isLBS: kevent.get('isLBS'),
+                    date: util.formatTimeForDate(kevent.get('expiredAt')),
+                    time: util.formatTimeForTime(kevent.get('expiredAt'))
                 }))
                 .catch(console.error);
         }         
@@ -42,6 +45,7 @@ Page({
         var category = e.detail.value.category
         var count = e.detail.value.count
         var isLBS = that.data.isLBS
+        var description = e.detail.value.description
            
         console.log(title);        
         
@@ -59,9 +63,11 @@ Page({
         if (that.data.id) {
             console.log("更新")
             that.data.kevent.set('title', title);
+            that.data.kevent.set('description', description);
             that.data.kevent.set('count', Number(count));
             that.data.kevent.set('category',Number(category));
             that.data.kevent.set('isLBS',isLBS);
+            that.data.kevent.set('expiredAt', new Date(that.data.date + ' ' + that.data.time));
             that.data.kevent.save().then(that.setData({loading:false})).then(
                 wx.showToast({
                     title: '修改成功',
@@ -74,6 +80,7 @@ Page({
             new Kevent({
                 user: AV.User.current(),
                 title: title,
+                description: description,
                 count: Number(count),
                 category: Number(category),
                 isDeleted:0,
