@@ -13,7 +13,8 @@ Page({
         id: '',
         kevent:{},
         date:util.formatTimeForDate(new Date),
-        time:util.formatTimeForTime(new Date)
+        time:util.formatTimeForTime(new Date),
+        tempFilePaths: ''
     },
     onLoad: function(params) {
         var that = this
@@ -31,7 +32,8 @@ Page({
                     count: kevent.get('count'),
                     isLBS: kevent.get('isLBS'),
                     date: util.formatTimeForDate(kevent.get('expiredAt')),
-                    time: util.formatTimeForTime(kevent.get('expiredAt'))
+                    time: util.formatTimeForTime(kevent.get('expiredAt')),
+                    tempFilePaths: kevent.get('tempFilePaths')
                 }))
                 .catch(console.error);
         }         
@@ -46,6 +48,7 @@ Page({
         var count = e.detail.value.count
         var isLBS = that.data.isLBS
         var description = e.detail.value.description
+        var tempFilePaths = e.detail.value.tempFilePaths
            
         console.log(title);        
         
@@ -68,6 +71,7 @@ Page({
             that.data.kevent.set('category',Number(category));
             that.data.kevent.set('isLBS',isLBS);
             that.data.kevent.set('expiredAt', new Date(that.data.date + ' ' + that.data.time));
+            that.data.kevent.set('tempFilePaths',tempFilePaths);
             that.data.kevent.save().then(that.setData({loading:false})).then(
                 wx.showToast({
                     title: '修改成功',
@@ -77,6 +81,7 @@ Page({
             ).then(wx.navigateBack())
         } else {
             console.log("新建")
+            console.log("tempFilePaths:" + tempFilePaths)
             new Kevent({
                 user: AV.User.current(),
                 title: title,
@@ -86,7 +91,8 @@ Page({
                 isDeleted:0,
                 isLBS: isLBS,
                 expiredAt: new Date(that.data.date + ' ' + that.data.time),
-                attendCount: 0
+                attendCount: 0,
+                tempFilePaths: file.url()
             }).save().then(that.setData({loading:false})).then(
                 wx.showToast({
                     title: '保存成功',
@@ -121,5 +127,29 @@ Page({
             time:e.detail.value
         })
         console.log(this.data.time)
+    },
+    tapImage: function () {                  
+        var that = this; 
+        wx.chooseImage({      
+            count: 1, // 默认9        
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有 
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有 
+            success: function (res) { 
+            // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+                that.setData({  
+                    tempFilePaths: res.tempFilePaths  
+                })                              
+                var filePath = res.tempFilePaths[0];                
+                new AV.File('file-name', { 
+                    blob: { 
+                    uri: filePath, 
+                    }, 
+                    }).save().then( 
+                        file => console.log(file.url()) 
+                        ).catch(console.error); 
+                } 
+            }
+        )      
     }
+
 });

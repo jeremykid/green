@@ -9,8 +9,9 @@
             <view class="input_section">
                 <input placeholder="人数" value="{{count}}" type="number" name="count"></input>
             </view>
-            <view class="input_section">                
-                <textarea bindblur="bindTextAreaBlur" auto-height name="description" value="{{description}}"> </textarea>
+            <view class="input_section">
+                <view class="input_title">活动描述</view>                
+                <textarea bindblur="bindTextAreaBlur" auto-height name="description" placeholder="活动描述" value="{{description}}">  </textarea>
             </view>
             <view class="input_section">
                 <view class="input_title">活动类型</view>
@@ -43,6 +44,9 @@
                             </view>  
                     </picker>  
                 </view>  
+            </view>
+            <view class="btn-area" >
+                <button bindtap="tapImage" type="primary">上传图片</button>
             </view>
             <view class="btn-area">
                 <button formType="submit" type="primary">保存</button>
