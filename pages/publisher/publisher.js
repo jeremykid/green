@@ -71,7 +71,7 @@ Page({
             that.data.kevent.set('category',Number(category));
             that.data.kevent.set('isLBS',isLBS);
             that.data.kevent.set('expiredAt', new Date(that.data.date + ' ' + that.data.time));
-            that.data.kevent.set('tempFilePaths',tempFilePaths);
+            that.data.kevent.set('tempFilePaths',that.data.tempFilePaths);
             that.data.kevent.save().then(that.setData({loading:false})).then(
                 wx.showToast({
                     title: '修改成功',
@@ -92,7 +92,7 @@ Page({
                 isLBS: isLBS,
                 expiredAt: new Date(that.data.date + ' ' + that.data.time),
                 attendCount: 0,
-                tempFilePaths: file.url()
+                tempFilePaths: that.data.tempFilePaths
             }).save().then(that.setData({loading:false})).then(
                 wx.showToast({
                     title: '保存成功',
@@ -145,7 +145,7 @@ Page({
                     uri: filePath, 
                     }, 
                     }).save().then( 
-                        file => console.log(file.url()) 
+                        file => that.setData({tempFilePaths: file.url()}) 
                         ).catch(console.error); 
                 } 
             }

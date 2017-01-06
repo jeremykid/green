@@ -5,6 +5,7 @@ Page({
     data: {
         category_array: [],
         my_kevents: [],
+        attended_kevents: [],
         lbs_kevents: [],
         userInfo: {},
         title: 'title',
@@ -39,7 +40,7 @@ Page({
         lbs_kevents_query.equalTo('isDeleted',0).greaterThan('expiredAt', new Date());
 
         new AV.Query('Kevent')
-            .equalTo('isDeleted',0).greaterThan('expiredAt', new Date())
+            .equalTo('isDeleted',0)//.greaterThan('expiredAt', new Date())
             .include('user')         
             .descending('createdAt')
             .find()
@@ -83,21 +84,35 @@ Page({
             .descending('createdAt')
             .find()
             .then(function(attendees) {
+                console.log("length:"+attendees.length);
                 var attended_event_array = [];
-                console.log(attendees.length)
                 for(var i=0; i<attendees.length; i++) {
-                    attended_event_array.push({
-                        'category':category,
-                        'objectId':attendees[i].get('targetKevent').get('objectId'),
-                        'title':attendees[i].get('targetKevent').get('title'),
-                        'count':attendees[i].get('targetKevent').get('count'),
-                        'attendCount':attendees[i].get('targetKevent').get('attendCount'),
-                        'createdAt':util.formatTime2(attendees[i].get('targetKevent').get('createdAt')),
-                        'user_nickName':attendees[i].get('targetKevent').get('user').get('nickName')
-                    })
+                    console.log("my.....123...:"+attended_event_array.length+"i:"+i)
+
+                    if (attendees[i].get('targetKevent')) {
+                        attended_event_array.push({
+                            'category':attendees[i].get('targetKevent').get('category'),
+                            'objectId':attendees[i].get('targetKevent').get('objectId'),
+                            'title':attendees[i].get('targetKevent').get('title'),
+                            'count':attendees[i].get('targetKevent').get('count'),
+                            'attendCount':attendees[i].get('targetKevent').get('attendCount'),
+                            'createdAt':util.formatTime2(attendees[i].get('targetKevent').get('createdAt')),
+                            'user_nickName':attendees[i].get('targetKevent').get('user').get('nickName')
+                        });
+                    } else {
+                        //attended_event_array.push({
+                        //    'objectId':attendees[i].get('targetKevent')
+                        //})
+                    }
                 }
-                that.setData({ attended_kevents: attended_event_array, my_attended_count: attended_event_array.length});
-                that.data.loading_count = that.data.loading_count - 1
+                console.log("my2........:"+attended_event_array.length);
+
+                that.setData({ 
+                    attended_kevents: attended_event_array, 
+                    my_attended_count: 10
+                });
+                that.data.loading_count = that.data.loading_count - 1;
+                
                 if (that.data.loading_count < 1) {that.setData({loading: false})}
             })
             .catch(function(error){

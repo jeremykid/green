@@ -78,6 +78,22 @@ Page({
     },
     tapQuit: function() {
         var that = this;
+        wx.showActionSheet({
+            itemList: ['退出活动'],
+            itemColor: "#ff0000",
+            success: function(res) {
+                if (res.tapIndex==0) {
+                    that.quitKevent()
+                }
+                console.log(res.tapIndex)
+            },
+            fail: function(res) {
+                console.log(res.errMsg)
+            }
+        })
+    },
+    quitKevent: function () {
+        var that=this;
         that.setData({loading:true})
         var attendee = AV.Object.createWithoutData('Attendee', that.data.myAttendeeId);
         attendee.destroy().then(function() {
@@ -96,8 +112,34 @@ Page({
             that.onShow();
         })
     },
+
     tapDelete: function () {
-        var that = this
+        var that = this;
+        wx.showActionSheet({
+            itemList: ['确认删除'],
+            itemColor: "#ff0000",
+            success: function(res) {
+                if (res.tapIndex==0) {
+                    that.setData({loading:true})
+                    var kevent = AV.Object.createWithoutData('Kevent',that.data.kevent.id);
+                    kevent.set('isDeleted',1);
+                    kevent.save().then(
+                        wx.showToast({
+                            title: '已删除',
+                            icon: 'success',
+                            duration: 800
+                        })
+                    ).then(wx.navigateBack())
+                    console.log('用户点击确定')
+                }
+                console.log(res.tapIndex)
+            },
+            fail: function(res) {
+                console.log(res.errMsg)
+            }
+        })
+
+        /*
         wx.showModal({
             title: '提示',
             content: '确定删除这个活动？',
@@ -117,6 +159,7 @@ Page({
                 }
             }
         })
+        */
     },
     tapEdit: function() {
         //var that = this;
@@ -135,5 +178,5 @@ Page({
             path: '/pages/join/join?kevent_id='+this.data.kevent.id
 
         }
-  }
+    }
 })
