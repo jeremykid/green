@@ -8,7 +8,11 @@ Page({
         lbs_kevents: [],
         userInfo: {},
         title: 'title',
-        loading: false
+        loading: false,
+        loading_count: 2,
+        my_kevents_count: 0,
+        my_attended_count: 0,
+        xiaoyu: '<<'
     },
     onLoad: function () {
         var that = this
@@ -27,10 +31,16 @@ Page({
     },
     onShow:function () {
         var that = this;
+        that.setData({loading:true, loading_count:2});
+        var my_kevents_query = new AV.Query('Kevent');
+        my_kevents_query.equalTo('user', AV.User.current());
+
+        var lbs_kevents_query = new AV.Query('Kevent');
+        lbs_kevents_query.equalTo('isDeleted',0).greaterThan('expiredAt', new Date());
+
         new AV.Query('Kevent')
-            .include('user')
-            .equalTo('isDeleted',0)
-            .greaterThan('expiredAt', new Date())            
+            .equalTo('isDeleted',0).greaterThan('expiredAt', new Date())
+            .include('user')         
             .descending('createdAt')
             .find()
             .then(function(kevents){
@@ -59,8 +69,39 @@ Page({
                         });
                     }
                 }
-                that.setData({ my_kevents: my_event_array, lbs_kevents: lbs_event_array })
+                that.setData({ my_kevents: my_event_array, lbs_kevents: lbs_event_array, my_kevents_count: my_event_array.length })
+                that.data.loading_count = that.data.loading_count - 1
+                if (that.data.loading_count < 1) {that.setData({loading: false})}
             })
-            .catch(console.error);
+            .catch(function(error){
+                console.error;that.setData({loading:false})
+            });
+
+        new AV.Query('Attendee')
+            .equalTo('user', AV.User.current())
+            .include('targetKevent')
+            .descending('createdAt')
+            .find()
+            .then(function(attendees) {
+                var attended_event_array = [];
+                console.log(attendees.length)
+                for(var i=0; i<attendees.length; i++) {
+                    attended_event_array.push({
+                        'category':category,
+                        'objectId':attendees[i].get('targetKevent').get('objectId'),
+                        'title':attendees[i].get('targetKevent').get('title'),
+                        'count':attendees[i].get('targetKevent').get('count'),
+                        'attendCount':attendees[i].get('targetKevent').get('attendCount'),
+                        'createdAt':util.formatTime2(attendees[i].get('targetKevent').get('createdAt')),
+                        'user_nickName':attendees[i].get('targetKevent').get('user').get('nickName')
+                    })
+                }
+                that.setData({ attended_kevents: attended_event_array, my_attended_count: attended_event_array.length});
+                that.data.loading_count = that.data.loading_count - 1
+                if (that.data.loading_count < 1) {that.setData({loading: false})}
+            })
+            .catch(function(error){
+                console.error;that.setData({loading:false})
+            });
     },
 })

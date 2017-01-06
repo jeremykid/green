@@ -1,4 +1,5 @@
 <view class="container">
+    <loading hidden="{{!loading}}">处理中</loading>
     <view class="kevent-body kevent-body{{kevent.category}}">
         <view class="kevent-title">
             <view class="kevent-title-text">{{kevent.title}}</view>

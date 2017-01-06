@@ -11,7 +11,8 @@ Page({
         loginUser: {},
         expiredAt: {},
         isAttend: false,
-        myAttendeeId: ''
+        myAttendeeId: '',
+        loading: false
     },
     onLoad: function (params) {
         this.setData({id: params.id, category_array: app.category_array})
@@ -24,8 +25,7 @@ Page({
                     // 成功，此时可在控制台中看到更新后的用户信息
                     app.globalData.user = user.toJSON();
                     console.log(app.globalData.user)
-                }).then(that.setData({userInfo:user.toJSON()})
-).catch(console.error);
+                }).then(that.setData({userInfo:user.toJSON()})).catch(console.error);
             }
         });
     },
@@ -78,6 +78,7 @@ Page({
     },
     tapQuit: function() {
         var that = this;
+        that.setData({loading:true})
         var attendee = AV.Object.createWithoutData('Attendee', that.data.myAttendeeId);
         attendee.destroy().then(function() {
             var targetKevent = AV.Object.createWithoutData('Kevent', that.data.kevent.id);
@@ -86,25 +87,36 @@ Page({
             targetKevent.fetchWhenSave(true);
             return targetKevent.save()
         }).then(function(success) {
-            console.log("删除成功");
-            that.setData({isAttend:false, myAttendeeId:''})
+            console.log("退出成功");
+            that.setData({isAttend:false, myAttendeeId:'', loading: false})
             that.onShow();
         }, function(error) {
-            console.log("删除失败");
+            console.log("退出失败");
+            that.setData({loading: false})
             that.onShow();
         })
     },
     tapDelete: function () {
         var that = this
-        var kevent = AV.Object.createWithoutData('Kevent',that.data.kevent.id);
-        kevent.set('isDeleted',1);
-        kevent.save().then(
-            wx.showToast({
-                title: '已删除',
-                icon: 'success',
-                duration: 800
-            })
-        ).then(wx.navigateBack())
+        wx.showModal({
+            title: '提示',
+            content: '确定删除这个活动？',
+            success: function(res) {
+                if (res.confirm) {
+                    that.setData({loading:true})
+                    var kevent = AV.Object.createWithoutData('Kevent',that.data.kevent.id);
+                    kevent.set('isDeleted',1);
+                    kevent.save().then(
+                        wx.showToast({
+                            title: '已删除',
+                            icon: 'success',
+                            duration: 800
+                        })
+                    ).then(wx.navigateBack())
+                    console.log('用户点击确定')
+                }
+            }
+        })
     },
     tapEdit: function() {
         //var that = this;

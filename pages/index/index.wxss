@@ -102,6 +102,20 @@
     border-radius: 10rpx;
     border-width:2rpx;
     border-style:solid;
+    border-color: white;
+}
+
+.achievement-body-none {
+    border-color:rgb(227, 227, 227);
+    background: linear-gradient(to right, rgb(180,180,180), rgb(150,150,150));
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    font-size: 30rpx;
+}
+
+.achievement-body-none-text {
+    margin:20rpx;
 }
 
 .achievement-body0 {

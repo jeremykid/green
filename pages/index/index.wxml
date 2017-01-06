@@ -18,17 +18,48 @@
     </view>
     -->
     <view class="achievement-list">
-        <view class="section-title">我参与的</view>
-        <view wx:for="{{my_kevents}}">
-            <navigator class="achievement-body achievement-body{{item.category}}" url="../detail/detail?id={{item.objectId}}">
-                <view class="achievement-title">
-                    <view class="achievement-title-text">{{item.title}}</view>
-                    <view class="achievement-title-difficulty">{{category_array[item.category]}}</view>
-                </view>
-                <view class="achievement-desc">人数:{{item.attendCount}}/{{item.count}}</view>
-                <view class="achievement-time">{{item.createdAt}}由{{item.user_nickName}}发布</view>
+        <view class="section-title">我发起的</view>
+        <view wx:if = "{{my_kevents_count>0}}">
+            <view wx:for="{{my_kevents}}">
+                <navigator class="achievement-body achievement-body{{item.category}}" url="../detail/detail?id={{item.  objectId}}">
+                    <view class="achievement-title">
+                        <view class="achievement-title-text">{{item.title}}</view>
+                        <view class="achievement-title-difficulty">{{category_array[item.category]}}</view>
+                    </view>
+                    <view class="achievement-desc">人数:{{item.attendCount}}/{{item.count}}</view>
+                    <view class="achievement-time">{{item.createdAt}}由{{item.user_nickName}}发布</view>
+                </navigator>
+            </view>
+        </view>
+        <view wx:else>
+            <navigator class="achievement-body achievement-body-none" url="../publisher/publisher">
+                <view class="achievement-body-none-text">你还没有组过局，点 下方+ 或者</view>
+                <view class="achievement-body-none-text">>>这里{{xiaoyu}}</view>
+                <view class="achievement-body-none-text">发起组局</view>
             </navigator>
         </view>
+
+        <view class="section-title">我参加的</view>
+        <view wx:if = "{{my_attended_count>0}}">
+            <view wx:for="{{attended_kevents}}">
+                <navigator class="achievement-body achievement-body{{item.category}}" url="../detail/detail?id={{item.  objectId}}">
+                    <view class="achievement-title">
+                        <view class="achievement-title-text">{{item.title}}</view>
+                        <view class="achievement-title-difficulty">{{category_array[item.category]}}</view>
+                    </view>
+                    <view class="achievement-desc">人数:{{item.attendCount}}/{{item.count}}</view>
+                    <view class="achievement-time">{{item.createdAt}}由{{item.user_nickName}}发布</view>
+                </navigator>
+            </view>
+        </view>
+        <view wx:else>
+            <navigator class="achievement-body achievement-body-none" url="../publisher/publisher">
+                <view class="achievement-body-none-text">你没有参加任何局，点 下方+ 或者</view>
+                <view class="achievement-body-none-text">>>这里{{xiaoyu}}</view>
+                <view class="achievement-body-none-text">发起组局</view>
+            </navigator>
+        </view>
+
         <view class="section-title">附近的</view>
         <view wx:for="{{lbs_kevents}}">
             <navigator class="achievement-body achievement-body{{item.category}}" url="../detail/detail?id={{item.objectId}}">
