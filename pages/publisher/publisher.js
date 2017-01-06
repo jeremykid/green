@@ -14,7 +14,8 @@ Page({
         kevent:{},
         date:util.formatTimeForDate(new Date),
         time:util.formatTimeForTime(new Date),
-        tempFilePaths: ''
+        tempFilePaths: '',
+        showMore: false
     },
     onLoad: function(params) {
         var that = this
@@ -150,6 +151,9 @@ Page({
                 } 
             }
         )      
+    },
+    tapShowMore: function() {
+        console.log("tapShowMore")
+        this.setData({showMore: true})
     }
-
 });

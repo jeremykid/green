@@ -10,25 +10,6 @@
                 <input placeholder="人数" value="{{count}}" type="number" name="count"></input>
             </view>
             <view class="input_section">
-                <view class="input_title">活动描述</view>                
-                <textarea bindblur="bindTextAreaBlur" auto-height name="description" placeholder="活动描述" value="{{description}}">  </textarea>
-            </view>
-            <view class="input_section">
-                <view class="input_title">活动类型</view>
-                <picker bindchange="catePickerChange" value="{{category_index}}" range="{{category_array}}" name="category">
-                    <view class="picker">{{category_array[category_index]}}</view>
-                </picker>
-            </view>
-            <view class="input_section">
-                <view class="input_title">位置信息</view>
-                <view class="switch_section">
-                    <view class="switch_text">
-                        允许被附近人看见
-                    </view>
-                    <switch checked="{{isLBS}}" bindchange="switchChange" name="isLBS"/>
-                </view>
-            </view>
-            <view class="input_section">
                 <view class="input_title">到期时间</view>
                 <view class="input_section">  
                     <picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindTimeChange">  
@@ -45,12 +26,41 @@
                     </picker>  
                 </view>  
             </view>
-            <view class="btn-area" >
-                <button bindtap="tapImage" type="primary">上传图片</button>
+            <view class="btn-area" hidden="{{showMore}}">
+                <button bindtap="tapShowMore" type="default">展开补充更多信息</button>
+            </view> 
+            <view class="input_section" hidden="{{!showMore}}">
+                <view class="input_title">活动类型</view>
+                <picker bindchange="catePickerChange" value="{{category_index}}" range="{{category_array}}" name="category">
+                    <view class="picker">{{category_array[category_index]}}</view>
+                </picker>
+            </view>
+            <view class="input_section" hidden="{{!showMore}}">
+                <view class="input_title">位置信息</view>
+                <view class="switch_section">
+                    <view class="switch_text">
+                        允许被附近人看见
+                    </view>
+                    <switch checked="{{isLBS}}" bindchange="switchChange" name="isLBS"/>
+                </view>
+            </view>
+            <view class="input_section" hidden="{{!showMore}}">
+                <view class="input_title">活动描述</view>                
+                <textarea class="description_textarea" bindblur="bindTextAreaBlur" name="description" placeholder="活动描述" value="{{description}}"></textarea>
+            </view>
+            <view class="btn-area" hidden="{{!showMore}}">
+                <view class="input_title">活动图片</view>
+                <view wx:if="{{tempFilePaths==''}}">
+                    <button bindtap="tapImage" type="default">上传图片</button>
+                </view>
+                <view wx:else>
+                    <image src="{{tempFilePaths}}" bindtap="tapImage"/>
+                    <view>点击更换</view>
+                </view>
             </view>
             <view class="btn-area">
                 <button formType="submit" type="primary">保存</button>
-            </view>
+            </view> 
         </form>
     </view>
 </view>

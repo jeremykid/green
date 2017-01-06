@@ -53,11 +53,11 @@
             </view>
         </view>
         <view wx:else>
-            <navigator class="achievement-body achievement-body-none" url="../publisher/publisher">
-                <view class="achievement-body-none-text">你没有参加任何局，点 下方+ 或者</view>
-                <view class="achievement-body-none-text">>>这里{{xiaoyu}}</view>
-                <view class="achievement-body-none-text">发起组局</view>
-            </navigator>
+            <view class="achievement-body achievement-body-none">
+                <view class="achievement-body-none-text">你没有参加任何局，进入任意组局</view>
+                <view class="achievement-body-none-text">点击>>我要参加{{xiaoyu}}</view>
+                <view class="achievement-body-none-text">报名加入</view>
+            </view>
         </view>
 
         <view class="section-title">附近的</view>

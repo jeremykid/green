@@ -109,7 +109,7 @@ Page({
 
                 that.setData({ 
                     attended_kevents: attended_event_array, 
-                    my_attended_count: 10
+                    my_attended_count: attended_event_array.length
                 });
                 that.data.loading_count = that.data.loading_count - 1;
                 

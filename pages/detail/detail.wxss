@@ -108,3 +108,12 @@
     margin: 20rpx;
     margin-top: 1rem;
 }
+
+.tips {
+    margin-top: 40rpx;
+    margin:20rpx;
+    color: rgb(200, 200, 200);
+    text-align: center;
+    padding: 1rem;
+    font-size: 25rpx;
+}

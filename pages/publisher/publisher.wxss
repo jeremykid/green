@@ -35,3 +35,7 @@
 .section {
     height:500rpx;
 }
+
+.description_textarea {
+
+}
