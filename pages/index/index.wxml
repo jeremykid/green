@@ -61,7 +61,7 @@
         </view>
 
         <view class="section-title">附近的</view>
-        <view wx:for="{{lbs_kevents}}">
+        <view wx:for="{{nearby_kevents}}">
             <navigator class="achievement-body achievement-body{{item.category}}" url="../detail/detail?id={{item.objectId}}">
                 <view class="achievement-title">
                     <view class="achievement-title-text">{{item.title}}</view>
