@@ -13,7 +13,9 @@ Page({
         loading_count: 2,
         my_kevents_count: 0,
         my_attended_count: 0,
-        xiaoyu: '<<'
+        xiaoyu: '<<',        
+        hasLocation:false,
+        location:{}
     },
     onLoad: function () {
         var that = this
@@ -27,6 +29,18 @@ Page({
                     console.log(app.globalData.user)
                 }).then(that.setData({userInfo:user.toJSON(),category_array: app.category_array})
 ).catch(console.error);
+            }
+        });
+        wx.getLocation( {
+            success: function( res ) {
+                console.log( res )
+                that.setData( {
+                hasLocation: true,
+                location: {
+                    longitude: res.longitude,
+                    latitude: res.latitude
+                }
+                })
             }
         });
     },
@@ -59,15 +73,20 @@ Page({
                             'user_nickName':kevents[i].get('user').get('nickName')
                         });
                     } else {
-                        lbs_event_array.push({
-                            'category':kevents[i].get('category'),
-                            'objectId':kevents[i].get('objectId'),
-                            'title':kevents[i].get('title'),
-                            'count':kevents[i].get('count'),
-                            'attendCount':kevents[i].get('attendCount'),
-                            'createdAt':util.formatTime2(kevents[i].get('createdAt')),
-                            'user_nickName':kevents[i].get('user').get('nickName')
-                        });
+                        var longitude = Math.abs(that.data.location.longitude - kevents[i].get('locLongitude'));
+                        var latitude = Math.abs(that.data.location.latitude - kevents[i].get('locLatitude'));
+
+                        if(longitude <10 && latitude<10 ){
+                            lbs_event_array.push({
+                                'category':kevents[i].get('category'),
+                                'objectId':kevents[i].get('objectId'),
+                                'title':kevents[i].get('title'),
+                                'count':kevents[i].get('count'),
+                                'attendCount':kevents[i].get('attendCount'),
+                                'createdAt':util.formatTime2(kevents[i].get('createdAt')),
+                                'user_nickName':kevents[i].get('user').get('nickName')
+                            });
+                        }
                     }
                 }
                 that.setData({ my_kevents: my_event_array, lbs_kevents: lbs_event_array, my_kevents_count: my_event_array.length })

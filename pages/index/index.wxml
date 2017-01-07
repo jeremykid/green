@@ -71,6 +71,6 @@
                 <view class="achievement-time">{{item.createdAt}}由{{item.user_nickName}}发布</view>
             </navigator>
         </view>
-    </view>
+    </view>    
     <navigator url="../publisher/publisher"><view class="publisher-button">+</view></navigator>
 </view>

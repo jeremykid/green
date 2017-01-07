@@ -15,7 +15,9 @@ Page({
         date:util.formatTimeForDate(new Date),
         time:util.formatTimeForTime(new Date),
         tempFilePaths: '',
-        showMore: false
+        showMore: false,
+        locLongitude:0,
+        locLatitude:0        
     },
     onLoad: function(params) {
         var that = this
@@ -37,7 +39,17 @@ Page({
                     tempFilePaths: kevent.get('tempFilePaths')
                 }))
                 .catch(console.error);
-        }         
+        }
+        wx.getLocation( {
+            success: function( res ) {
+                console.log( res )
+                that.setData( {
+                hasLocation: true,
+                locLongitude: res.longitude,
+                locLatitude: res.latitude                
+                })
+            }
+        });         
     },
     formSubmit: function(e) {
         var that = this
@@ -93,7 +105,9 @@ Page({
                 isLBS: isLBS,
                 expiredAt: new Date(that.data.date + ' ' + that.data.time),
                 attendCount: 0,
-                tempFilePaths: that.data.tempFilePaths
+                tempFilePaths: that.data.tempFilePaths,
+                locLongitude: that.data.locLongitude,
+                locLatitude: that.data.locLatitude
             }).save().then(that.setData({loading:false})).then(
                 wx.showToast({
                     title: '保存成功',
