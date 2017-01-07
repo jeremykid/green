@@ -1,4 +1,7 @@
 function formatTime(date) {
+  if(!date) {
+    return '出错了'
+  }
   var year = date.getFullYear()
   var month = date.getMonth() + 1
   var day = date.getDate()
@@ -28,7 +31,22 @@ function formatTime2(theDate) {
   } else {
     return theDate.getFullYear()+"-"+(theDate.getMonth()+1)+"-"+theDate.getDate()
   }
-  
+}
+
+function formatTime3(theDate) {
+  var now_time = new Date();
+  var interval = (theDate - now_time)/1000;
+  if (interval <= 0) {
+    return "已经";
+  } else if(interval < 60) {
+    return "1分钟内";
+  } else if (interval < 3600) {
+    return (interval/60|0)+"分钟后";
+  } else if (interval < 3600*24) {
+    return (interval/3600|0)+"小时"+(interval%3600/60|0)+"分钟后";
+  } else {
+    return (interval/(3600*24)|0)+"天"+(interval%(3600*24)/3600|0)+"小时"+(interval%(3600*24)%3600/60|0)+"分钟后";
+  }
 }
 
 function formatTimeForDate(date) {
@@ -47,6 +65,7 @@ function formatTimeForTime(date) {
 module.exports = {
   formatTime: formatTime,
   formatTime2: formatTime2,
+  formatTime3: formatTime3,
   formatTimeForDate:formatTimeForDate,
   formatTimeForTime:formatTimeForTime
 }

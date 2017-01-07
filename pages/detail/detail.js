@@ -41,7 +41,8 @@ Page({
             .then(kevent => that.setData({                
                 kevent:kevent,
                 loginUser:loginUser,
-                day_count: ((now_time - kevent.createdAt)/1000/3600/24|0),                                     expiredAt: util.formatTime(kevent.get("expiredAt"))
+                day_count: ((now_time - kevent.createdAt)/1000/3600/24|0),
+                expiredAt: util.formatTime(kevent.get("expiredAt"))
             }))
             .then(function(){
                 console.log("kevent_user:"+that.data.kevent.get('user').get('objectId'));     

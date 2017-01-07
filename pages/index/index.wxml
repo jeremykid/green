@@ -27,7 +27,11 @@
                         <view class="achievement-title-difficulty">{{category_array[item.category]}}</view>
                     </view>
                     <view class="achievement-desc">人数:{{item.attendCount}}/{{item.count}}</view>
-                    <view class="achievement-time">{{item.createdAt}}由{{item.user_nickName}}发布</view>
+                    <view class="achievement-time">{{item.expiredAt}}到期</view>
+                    <view class="achievement-owner">
+                        <image class="owner-photo" src="{{item.user_avatarUrl}}"></image>
+                        <view class="owner-name">{{item.user_nickName}}</view>
+                    </view>
                 </navigator>
             </view>
         </view>
@@ -45,10 +49,19 @@
                 <navigator class="achievement-body achievement-body{{item.category}}" url="../detail/detail?id={{item.  objectId}}">
                     <view class="achievement-title">
                         <view class="achievement-title-text">{{item.title}}</view>
-                        <view class="achievement-title-difficulty">{{category_array[item.category]}}</view>
+                        <view wx:if="{{item.isDeleted}}">
+                            <view class="achievement-title-difficulty">活动已删除</view>
+                        </view>
+                        <view wx:else>
+                            <view class="achievement-title-difficulty">{{category_array[item.category]}}</view>
+                        </view>
                     </view>
                     <view class="achievement-desc">人数:{{item.attendCount}}/{{item.count}}</view>
-                    <view class="achievement-time">{{item.createdAt}}由{{item.user_nickName}}发布</view>
+                    <view class="achievement-time">{{item.expiredAt}}到期</view>
+                    <view class="achievement-owner">
+                        <image class="owner-photo" src="{{item.user_avatarUrl}}"></image>
+                        <view class="owner-name">{{item.user_nickName}}</view>
+                    </view>
                 </navigator>
             </view>
         </view>
@@ -68,7 +81,11 @@
                     <view class="achievement-title-difficulty">{{category_array[item.category]}}</view>
                 </view>
                 <view class="achievement-desc">人数:{{item.attendCount}}/{{item.count}}</view>
-                <view class="achievement-time">{{item.createdAt}}由{{item.user_nickName}}发布</view>
+                <view class="achievement-time">{{item.expiredAt}}到期</view>
+                <view class="achievement-owner">
+                    <image class="owner-photo" src="{{item.user_avatarUrl}}"></image>
+                    <view class="owner-name">{{item.user_nickName}}</view>
+                </view>
             </navigator>
         </view>
     </view>    

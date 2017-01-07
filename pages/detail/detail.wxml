@@ -12,16 +12,20 @@
         <view class="kevent-time">到期时间: {{expiredAt}}</view>
     </view>
     <view class="btn-area" wx:if = "{{!isAttend}}">
-        <button bindtap="tapJoin" type="primary">我要参加</button>
+        <view wx:if="{{!kevent.isDeleted}}">
+            <button bindtap="tapJoin" type="primary">我要参加</button>
+        </view>
     </view>
     <view class="btn-area" wx:else>
         <button bindtap="tapQuit" type="default" data-myAttendeeId="{{myAttendeeId}}">我要退出</button>
     </view>
-    <view class="btn-area" wx:if ="{{kevent.user.objectId == loginUser.objectId}}" >
-        <button bindtap="tapEdit" type="default">修改</button>
-    </view>
-    <view class="btn-area" wx:if ="{{kevent.user.objectId == loginUser.objectId}}" >
-        <button bindtap="tapDelete" type="warn">删除</button>
+    <view wx:if="{{!kevent.isDeleted}}">
+        <view class="btn-area" wx:if="{{kevent.user.objectId == loginUser.objectId}}" >
+            <button bindtap="tapEdit" type="default">修改</button>
+        </view>
+        <view class="btn-area" wx:if="{{kevent.user.objectId == loginUser.objectId}}" >
+            <button bindtap="tapDelete" type="default">删除</button>
+        </view>
     </view>
     <view wx:if="{{kevent.attendCount>0}}">
         <view class="section-title">参与名单</view>
@@ -34,7 +38,13 @@
             </view>
         </view>
     </view>
-    <view wx:if="{{kevent.attendCount<5}}">
+
+    <view wx:if="{{kevent.isDeleted}}">
+        <view class="tips">
+            该活动已经被删除，请退出
+        </view>
+    </view>
+    <view wx:elif="{{kevent.attendCount<5}}">
         <view class="tips">
             <view wx:if="{{kevent.attendCount==0}}">目前还没有人参与,点击右上角"。。。"，</view>
             <view wx:else>邀请更多人参与,点击右上角"。。。"，</view>

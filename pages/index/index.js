@@ -12,7 +12,7 @@ Page({
         userInfo: {},
         title: 'title',
         loading: false,
-        loading_count: 2,
+        loading_count: 3,
         my_kevents_count: 0,
         my_attended_count: 0,
         nearby_kevents_count: 0,
@@ -23,6 +23,7 @@ Page({
     onLoad: function () {
         var that = this
         const user = AV.User.current();
+
         wx.getUserInfo({
             success: ({userInfo}) => {
                 // 更新当前用户的信息
@@ -34,29 +35,10 @@ Page({
 ).catch(console.error);
             }
         });
-        wx.getLocation( {
-            success: function( res ) {
-                console.log( res )
-                that.setData( {
-                    hasLocation: true,
-                    location: {
-                        longitude: res.longitude,
-                        latitude: res.latitude
-                    }
-                })
-                that.fetchNearbyKevents(res.longitude, res.latitude)
-            }
-        });
     },
     onShow:function () {
         var that = this;
-        that.setData({loading:true, loading_count:2});
-        var my_kevents_query = new AV.Query('Kevent');
-        my_kevents_query.equalTo('user', AV.User.current());
-
-        var lbs_kevents_query = new AV.Query('Kevent');
-        lbs_kevents_query.equalTo('isDeleted',0).greaterThan('expiredAt', new Date());
-
+        that.setData({loading:true, loading_count:3});
         //这里是查自己开的局
         new AV.Query('Kevent') 
             .equalTo('isDeleted',0)//.greaterThan('expiredAt', new Date())
@@ -75,39 +57,12 @@ Page({
                         'count':kevents[i].get('count'),
                         'attendCount':kevents[i].get('attendCount'),
                         'createdAt':util.formatTime2(kevents[i].get('createdAt')),
-                        'user_nickName':kevents[i].get('user').get('nickName')
+                        'expiredAt':util.formatTime3(kevents[i].get('expiredAt')),
+                        'user_nickName':kevents[i].get('user').get('nickName'),
+                        'user_avatarUrl':kevents[i].get('user').get('avatarUrl')
                     });
-                    /*
-                    if (kevents[i].get('user').id == AV.User.current().id) {
-                        my_event_array.push({
-                            'category':kevents[i].get('category'),
-                            'objectId':kevents[i].get('objectId'),
-                            'title':kevents[i].get('title'),
-                            'count':kevents[i].get('count'),
-                            'attendCount':kevents[i].get('attendCount'),
-                            'createdAt':util.formatTime2(kevents[i].get('createdAt')),
-                            'user_nickName':kevents[i].get('user').get('nickName')
-                        });
-                    } else {
-                        var longitude = Math.abs(that.data.location.longitude - kevents[i].get('locLongitude'));
-                        var latitude = Math.abs(that.data.location.latitude - kevents[i].get('locLatitude'));
-
-                        if(longitude <10 && latitude<10 ){
-                            lbs_event_array.push({
-                                'category':kevents[i].get('category'),
-                                'objectId':kevents[i].get('objectId'),
-                                'title':kevents[i].get('title'),
-                                'count':kevents[i].get('count'),
-                                'attendCount':kevents[i].get('attendCount'),
-                                'createdAt':util.formatTime2(kevents[i].get('createdAt')),
-                                'user_nickName':kevents[i].get('user').get('nickName')
-                            });
-                        }
-                    }
-                    */
                 }
-                that.setData({ my_kevents: my_event_array, my_kevents_count: my_event_array.length })
-                that.data.loading_count = that.data.loading_count - 1
+                that.setData({ my_kevents: my_event_array, my_kevents_count: my_event_array.length, loading_count: that.data.loading_count-1 })
                 if (that.data.loading_count < 1) {that.setData({loading: false})}
             })
             .catch(function(error){
@@ -118,6 +73,7 @@ Page({
         new AV.Query('Attendee') 
             .equalTo('user', AV.User.current())
             .include('targetKevent')
+            .include('targetKevent.user')
             .descending('createdAt')
             .find()
             .then(function(attendees) {
@@ -132,29 +88,44 @@ Page({
                             'count':attendees[i].get('targetKevent').get('count'),
                             'attendCount':attendees[i].get('targetKevent').get('attendCount'),
                             'createdAt':util.formatTime2(attendees[i].get('targetKevent').get('createdAt')),
-                            'user_nickName':attendees[i].get('targetKevent').get('user').get('nickName')
+                            'expiredAt':util.formatTime3(attendees[i].get('targetKevent').get('expiredAt')),
+                            'user_nickName':attendees[i].get('targetKevent').get('user').get('nickName'),
+                            'user_avatarUrl':attendees[i].get('targetKevent').get('user').get('avatarUrl'),
+                            'isDeleted':attendees[i].get('targetKevent').get('isDeleted')
                         });
                     } else {
-                        //这里考虑要不要给删除的Kevent补充告知。。。。
-                        //attended_event_array.push({
-                        //    'objectId':attendees[i].get('targetKevent')
-                        //})
+                        //这里要不要给删除的Kevent补充告知。。。。
+                        //好像不会哈，因为Kevent不会真正删除，只会给isDeleted设置为1
                     }
                 }
                 console.log("attended events count remain:"+attended_event_array.length);
 
                 that.setData({ 
                     attended_kevents: attended_event_array, 
-                    my_attended_count: attended_event_array.length
+                    my_attended_count: attended_event_array.length,
+                    loading_count: that.data.loading_count-1 
                 });
-                that.data.loading_count = that.data.loading_count - 1;
                 if (that.data.loading_count < 1) {that.setData({loading: false})}
             })
             .catch(function(error){
                 console.error
                 that.setData({loading:false})
             });
-        
+
+        //这里查附近的局
+        wx.getLocation({
+            success: function( res ) {
+                console.log( res )
+                that.setData({
+                    hasLocation: true,
+                    location: {
+                        longitude: res.longitude,
+                        latitude: res.latitude
+                    }
+                })
+                that.fetchNearbyKevents(res.longitude, res.latitude)
+            }
+        });
     },
 
     fetchNearbyKevents: function(longitude, latitude) {
@@ -162,7 +133,7 @@ Page({
         var that = this
         console.log("fetching Nearby Kevents..."+longitude+","+latitude)
         new AV.Query('Kevent')
-            .equalTo('isDeleted',0)//.greaterThan('expiredAt', new Date())
+            .equalTo('isDeleted',0).greaterThan('expiredAt', new Date())
             .lessThan('locLongitude', longitude + LONGITUDE_RANGE)
             .greaterThan('locLongitude', longitude - LONGITUDE_RANGE)
             .lessThan('locLatitude', latitude + LATITUDE_RANGE)
@@ -181,13 +152,17 @@ Page({
                         'count':kevents[i].get('count'),
                         'attendCount':kevents[i].get('attendCount'),
                         'createdAt':util.formatTime2(kevents[i].get('createdAt')),
-                        'user_nickName':kevents[i].get('user').get('nickName')
+                        'expiredAt':util.formatTime3(kevents[i].get('expiredAt')),
+                        'user_nickName':kevents[i].get('user').get('nickName'),
+                        'user_avatarUrl':kevents[i].get('user').get('avatarUrl')
                     });
                 }
                 that.setData({ 
                     nearby_kevents: nearby_event_array, 
-                    nearby_kevents_count: nearby_event_array.length
+                    nearby_kevents_count: nearby_event_array.length,
+                    loading_count: that.data.loading_count-1 
                 });
+                if (that.data.loading_count < 1) {that.setData({loading: false})}
                 console.log(".................................................")
                 console.log("nearby:"+kevents.length)
             })

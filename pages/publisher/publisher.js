@@ -2,6 +2,7 @@ const AV = require('../../utils/av-weapp.js')
 const Kevent = require('../../model/Kevent.js')
 var util = require('../../utils/util.js')
 var app = getApp()
+var the_date = new Date()
 Page({
     data: {
         category_array: [],
@@ -12,12 +13,12 @@ Page({
         isLBS: false,
         id: '',
         kevent:{},
-        date:util.formatTimeForDate(new Date),
-        time:util.formatTimeForTime(new Date),
+        date:util.formatTimeForDate(the_date),
+        time:util.formatTimeForTime(the_date),
         tempFilePaths: '',
         showMore: false,
-        locLongitude:0,
-        locLatitude:0        
+        locLongitude: -1000,
+        locLatitude: -1000        
     },
     onLoad: function(params) {
         var that = this
@@ -34,22 +35,14 @@ Page({
                     description:kevent.get('description'),
                     count: kevent.get('count'),
                     isLBS: kevent.get('isLBS'),
+                    locLongitude: kevent.get('locLongitude'),
+                    locLatitude: kevent.get('locLatitude'),
                     date: util.formatTimeForDate(kevent.get('expiredAt')),
                     time: util.formatTimeForTime(kevent.get('expiredAt')),
                     tempFilePaths: kevent.get('tempFilePaths')
                 }))
                 .catch(console.error);
-        }
-        wx.getLocation( {
-            success: function( res ) {
-                console.log( res )
-                that.setData( {
-                hasLocation: true,
-                locLongitude: res.longitude,
-                locLatitude: res.latitude                
-                })
-            }
-        });         
+        }      
     },
     formSubmit: function(e) {
         var that = this
@@ -66,7 +59,7 @@ Page({
         console.log(title);        
         
         if(!title) {
-            console.log('None')
+            console.log('Title None')
             that.setData({loading:false})
             wx.showToast({
                 title: '标题不能为空',
@@ -76,6 +69,36 @@ Page({
             return;
         }
 
+        if(count<=1) {
+            console.log('Title None')
+            that.setData({loading:false})
+            wx.showToast({
+                title: '人数不能少于2',
+                icon: 'loading',
+                duration: 1000
+            })
+            return;
+        }
+
+        if(!that.data.date) {
+            console.log('Expired Date None')
+            that.setData({loading:false})
+            wx.showToast({
+                title: '过期时间不能为空',
+                icon: 'loading',
+                duration: 1000
+            })
+            return;
+        }
+
+        var locLongitude = -1000;
+        var locLatitude = -1000;
+        if(isLBS) {
+            locLongitude = that.data.locLongitude;
+            locLatitude = that.data.locLatitude;
+        }
+
+
         if (that.data.id) {
             console.log("更新")
             that.data.kevent.set('title', title);
@@ -83,7 +106,9 @@ Page({
             that.data.kevent.set('count', Number(count));
             that.data.kevent.set('category',Number(category));
             that.data.kevent.set('isLBS',isLBS);
-            that.data.kevent.set('expiredAt', new Date(that.data.date + ' ' + that.data.time));
+            that.data.kevent.set('expiredAt', new Date((that.data.date + ' ' + that.data.time).replace(/-/g,"/")));
+            that.data.kevent.set('locLongitude', locLongitude);
+            that.data.kevent.set('locLatitude', locLatitude);
             that.data.kevent.set('tempFilePaths',that.data.tempFilePaths);
             that.data.kevent.save().then(that.setData({loading:false})).then(
                 wx.showToast({
@@ -95,6 +120,8 @@ Page({
         } else {
             console.log("新建")
             console.log("tempFilePaths:" + tempFilePaths)
+            var the_expiredAt = new Date((that.data.date + ' ' + that.data.time).replace(/-/g,"/"))
+            console.log("---------saved expiredAt:"+the_expiredAt)
             new Kevent({
                 user: AV.User.current(),
                 title: title,
@@ -103,11 +130,11 @@ Page({
                 category: Number(category),
                 isDeleted:0,
                 isLBS: isLBS,
-                expiredAt: new Date(that.data.date + ' ' + that.data.time),
+                expiredAt: new Date((that.data.date + ' ' + that.data.time).replace(/-/g,"/")),
                 attendCount: 0,
                 tempFilePaths: that.data.tempFilePaths,
-                locLongitude: that.data.locLongitude,
-                locLatitude: that.data.locLatitude
+                locLongitude: locLongitude,
+                locLatitude: locLatitude
             }).save().then(that.setData({loading:false})).then(
                 wx.showToast({
                     title: '保存成功',
@@ -128,6 +155,18 @@ Page({
     switchChange: function(e) {
         var that = this
         console.log('开关发生改变，携带值为', e.detail.value)
+        if (e.detail.value) {
+            wx.getLocation( {
+                success: function( res ) {
+                    console.log( res )
+                    that.setData( {
+                        hasLocation: true,
+                        locLongitude: res.longitude,
+                        locLatitude: res.latitude                
+                    })
+                }
+            }); 
+        }
         this.setData({isLBS: e.detail.value})
         console.log(that.data.isLBS)
     },
