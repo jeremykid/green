@@ -8,8 +8,15 @@
         <!--<view class="kevent-desc">活动描述: </view>
         <textarea bindblur="bindTextAreaBlur" auto-height name="description" value="{{kevent.description}}" disabled="true"> </textarea>-->    
         <view class="kevent-desc">参与人数: {{kevent.attendCount}}/{{kevent.count}}</view>
-        <view class="kevent-time">已发布: {{day_count}}天</view>
-        <view class="kevent-time">到期时间: {{expiredAt}}</view>
+        <!--<view class="kevent-time">已发布: {{day_count}}天</view>-->
+        <view class="kevent-time">{{expiredAt}}到期</view>
+    </view>
+    <view class="owner-section">
+        <navigator url="../profile/profile?id={{kevent_owner_id}}"><image class="head-photo" src="{{kevent_owner_avatarUrl}}"></image></navigator>
+        <view class="head-name">
+            <navigator url="../profile/profile?id={{kevent_owner_id}}"><text class="name">{{kevent_owner_nickName}}</text></navigator>
+            <text class="attend-time">{{createdAt}}发布组局</text>
+        </view>
     </view>
     <view class="btn-area" wx:if = "{{!isAttend}}">
         <view wx:if="{{!kevent.isDeleted}}">
@@ -30,11 +37,11 @@
     <view wx:if="{{kevent.attendCount>0}}">
         <view class="section-title">参与名单</view>
         <view wx:for="{{attendees}}" class="head-photo-name">
-            <view><image class="head-photo" src="{{item.user.avatarUrl}}"></image></view>
+            <navigator url="../profile/profile?id={{item.user.id}}"><image class="head-photo" src="{{item.user.avatarUrl}}"></image></navigator>
             <view class="head-name">
-                <text class="name">{{item.user.nickName}}</text>
+                <navigator url="../profile/profile?id={{item.user.id}}"><text class="name">{{item.user.nickName}}</text></navigator>
                 <text class="name-qmd">{{item.memo}}</text>
-                <text class="attend-time">{{item.createdAt}}</text>
+                <text class="attend-time">{{item.createdAt}}报名</text>
             </view>
         </view>
     </view>
@@ -46,9 +53,9 @@
     </view>
     <view wx:elif="{{kevent.attendCount<5}}">
         <view class="tips">
-            <view wx:if="{{kevent.attendCount==0}}">目前还没有人参与,点击右上角"。。。"，</view>
-            <view wx:else>邀请更多人参与,点击右上角"。。。"，</view>
-            <view>把活动分享给好友</view>
+            <view wx:if="{{kevent.attendCount==0}}">目前还没有人参与</view>
+            <view wx:else>邀请更多人参与</view>
+            <view>点击右上角"..."分享给好友</view>
         </view>
     </view>
 </view>

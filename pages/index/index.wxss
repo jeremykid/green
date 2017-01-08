@@ -27,32 +27,6 @@
     flex-basis:auto;
 }
 
-.achievement-owner {
-    text-align:left;
-    display:flex;
-    margin-left:13rem;
-    margin-right: 5rpx;
-    margin-bottom:20rpx;
-    font-size:30rpx;
-    align-items:center;
-}
-
-.owner-photo {
-    margin-left:10rpx;
-    width:50rpx;
-    height:50rpx;
-    border-radius:50rpx;
-    margin-right:10rpx;
-    flex-grow:0;
-    flex-shrink:0;
-    flex-basis:auto;   
-}
-
-.owner-name {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
 
 .head-name {
     display:flex;
@@ -152,19 +126,19 @@
 }
 
 .achievement-body1 {
-    border-color:blue;
+    border-color:white;
     background: linear-gradient(to right, rgb(0,123,187), rgb(0,122,176));
     color:white;
 }
 
 .achievement-body2 {
-    border-color:purple;
+    border-color:white;
     background: linear-gradient(to right, #7d5886, #63434f);
     color:white;
 }
 
 .achievement-body3 {
-    border-color:orange;
+    border-color:white;
     background: linear-gradient(to right, #f36c21,#f15a22);
     color:white;
 }
@@ -173,31 +147,73 @@
     margin:1rem;
     display:flex;
     justify-content:space-between;
+    align-items:flex-start;
 }
 
 .achievement-title-text {
+    width:80%;
+    font-size:17pt;
+    margin-top:0;
 }
 
 .achievement-title-difficulty {
-    font-size:25rpx;
-    color:rgba(255,255,255,0.3)
+    text-align:right;
+    width:20%;
+    font-size:10pt;
+    color:rgba(255,255,255,0.3);
+    margin-top:10rpx;
 }
 
 .achievement-desc {
     margin-top:20rpx;
-    font-size:30rpx;
+    font-size:14pt;
     margin-left:1rem;
 }
 
+.achievement-owner-section {
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    margin-top:1rem;
+    margin-bottom:1rem;
+}
+
 .achievement-time {
-    margin-top:40rpx;
+    width:60%;
     margin-left:1rem;
-    font-size:25rpx;
+    font-size:10pt;
     color:white;
     margin-bottom:30rpx;
 }
 
+.achievement-owner {
+    width:40%;
+    text-align:left;
+    display:flex;
+    margin-right: 5rpx;
+    font-size:10pt;
+    align-items:center;
+}
+
+.owner-photo {
+    margin-left:10rpx;
+    width:100rpx;
+    height:100rpx;
+    border-radius:100rpx;
+    margin-right:10rpx;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:auto;   
+}
+
+.owner-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .section-title {
+    font-size:17pt;
     margin-top: 1rem;
     margin-bottom: 1rem;
 }

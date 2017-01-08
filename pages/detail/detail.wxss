@@ -13,19 +13,16 @@
 }
 
 .kevent-body1 {
-    border-color:blue;
     background: linear-gradient(to right, rgb(0,123,187), rgb(0,122,176));
     color:white;
 }
 
 .kevent-body2 {
-    border-color:purple;
     background: linear-gradient(to right, #7d5886, #63434f);
     color:white;
 }
 
 .kevent-body3 {
-    border-color:orange;
     background: linear-gradient(to right, #f36c21,#f15a22);
     color:white;
 }
@@ -34,28 +31,39 @@
     margin:1rem;
     display:flex;
     justify-content:space-between;
+    align-items:flex-start;
 }
 
 .kevent-title-text {
+    width:80%;
+    font-size:17pt;
+    margin-top:0;
 }
 
 .kevent-title-difficulty {
-    font-size:25rpx;
-    color:rgba(255,255,255,0.3)
+    text-align:right;
+    width:20%;
+    font-size:10pt;
+    color:rgba(255,255,255,0.3);
+    margin-top:10rpx;
 }
 
 .kevent-desc {
     margin-top:20rpx;
-    font-size:30rpx;
+    font-size:14pt;
     margin-left:1rem;
 }
 
 .kevent-time {
-    margin-top:40rpx;
+    margin-top:1rem;
     margin-left:1rem;
-    font-size:25rpx;
+    font-size:10pt;
     color:white;
     margin-bottom:30rpx;
+}
+
+.owner-section {
+    display:flex;
 }
 
 .btn-area {
@@ -88,18 +96,21 @@
 
 .name {
     display:block;
+    font-size:11pt;
     margin-bottom:10rpx;
+    color:rgb(87,107,149);
+    font-weight: bolder;
 }
 
 .name-qmd {
-    font-size:26rpx;
+    font-size:11pt;
     color:#a1a1a1;
     display:block;
     margin-bottom:5rpx;
 }
 
 .attend-time {
-    font-size:20rpx;
+    font-size:10pt;
     color:#a1a1a1;
     display:block;
 }
@@ -112,8 +123,8 @@
 .tips {
     margin-top: 40rpx;
     margin:20rpx;
-    color: rgb(200, 200, 200);
+    color: rgb(136, 136, 136);
     text-align: center;
     padding: 1rem;
-    font-size: 25rpx;
+    font-size: 14pt;
 }

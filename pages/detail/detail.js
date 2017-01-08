@@ -6,6 +6,9 @@ Page({
         category_array: [],
         id: '',
         kevent: {},
+        kevent_owner_id: '',
+        kevent_owner_nickName: '',
+        kevent_owner_avatarUrl: '',
         process: [],
         attendees: [],
         loginUser: {},
@@ -31,18 +34,23 @@ Page({
     },
     onShow: function () {
         var that = this
+        that.setData({loading:true});
         var now_time = new Date()
         const loginUser = AV.User.current();         
         
         console.log("loginuser:"+loginUser.id);        
 
         new AV.Query('Kevent')
+            .include('user')
             .get(that.data.id)
             .then(kevent => that.setData({                
                 kevent:kevent,
+                kevent_owner_id: kevent.get('user').id,
+                kevent_owner_nickName: kevent.get('user').get('nickName'),
+                kevent_owner_avatarUrl: kevent.get('user').get('avatarUrl'),
                 loginUser:loginUser,
-                day_count: ((now_time - kevent.createdAt)/1000/3600/24|0),
-                expiredAt: util.formatTime(kevent.get("expiredAt"))
+                createdAt: util.formatTime2(kevent.get("createdAt")),
+                expiredAt: util.formatTime3(kevent.get("expiredAt"))
             }))
             .then(function(){
                 console.log("kevent_user:"+that.data.kevent.get('user').get('objectId'));     
@@ -64,6 +72,7 @@ Page({
                             'memo': attendees[i].get('memo'),
                             'createdAt': util.formatTime2(attendees[i].get('createdAt')),
                             'user': {
+                                'id': attendees[i].get('user').id,
                                 'nickName': attendees[i].get('user').get('nickName'),
                                 'avatarUrl': attendees[i].get('user').get('avatarUrl'),
                             }
@@ -71,7 +80,8 @@ Page({
                         console.log(attendees[i].get('user').get('avatarUrl'));
                     }
                     that.setData({
-                        attendees: attendee_array
+                        attendees: attendee_array,
+                        loading: false
                     });
                 });
             })

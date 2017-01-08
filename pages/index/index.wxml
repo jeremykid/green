@@ -21,16 +21,18 @@
         <view class="section-title">我发起的</view>
         <view wx:if = "{{my_kevents_count>0}}">
             <view wx:for="{{my_kevents}}">
-                <navigator class="achievement-body achievement-body{{item.category}}" url="../detail/detail?id={{item.  objectId}}">
+                <navigator class="achievement-body achievement-body{{item.category}}" url="../detail/detail?id={{item.objectId}}">
                     <view class="achievement-title">
                         <view class="achievement-title-text">{{item.title}}</view>
                         <view class="achievement-title-difficulty">{{category_array[item.category]}}</view>
                     </view>
-                    <view class="achievement-desc">人数:{{item.attendCount}}/{{item.count}}</view>
-                    <view class="achievement-time">{{item.expiredAt}}到期</view>
-                    <view class="achievement-owner">
-                        <image class="owner-photo" src="{{item.user_avatarUrl}}"></image>
-                        <view class="owner-name">{{item.user_nickName}}</view>
+                    <view class="achievement-desc">人数: {{item.attendCount}}/{{item.count}}</view>
+                    <view class="achievement-owner-section">
+                        <view class="achievement-time">{{item.expiredAt}}到期</view>
+                        <view class="achievement-owner">
+                            <image class="owner-photo" src="{{item.user_avatarUrl}}"></image>
+                            <view class="owner-name">{{item.user_nickName}}</view>
+                        </view>
                     </view>
                 </navigator>
             </view>
@@ -46,21 +48,18 @@
         <view class="section-title">我参加的</view>
         <view wx:if = "{{my_attended_count>0}}">
             <view wx:for="{{attended_kevents}}">
-                <navigator class="achievement-body achievement-body{{item.category}}" url="../detail/detail?id={{item.  objectId}}">
+                <navigator class="achievement-body achievement-body{{item.category}}" url="../detail/detail?id={{item.objectId}}">
                     <view class="achievement-title">
                         <view class="achievement-title-text">{{item.title}}</view>
-                        <view wx:if="{{item.isDeleted}}">
-                            <view class="achievement-title-difficulty">活动已删除</view>
-                        </view>
-                        <view wx:else>
-                            <view class="achievement-title-difficulty">{{category_array[item.category]}}</view>
-                        </view>
+                        <view class="achievement-title-difficulty">{{category_array[item.category]}}</view>
                     </view>
-                    <view class="achievement-desc">人数:{{item.attendCount}}/{{item.count}}</view>
-                    <view class="achievement-time">{{item.expiredAt}}到期</view>
-                    <view class="achievement-owner">
-                        <image class="owner-photo" src="{{item.user_avatarUrl}}"></image>
-                        <view class="owner-name">{{item.user_nickName}}</view>
+                    <view class="achievement-desc">人数: {{item.attendCount}}/{{item.count}}</view>
+                    <view class="achievement-owner-section">
+                        <view class="achievement-time">{{item.expiredAt}}到期</view>
+                        <view class="achievement-owner">
+                            <image class="owner-photo" src="{{item.user_avatarUrl}}"></image>
+                            <view class="owner-name">{{item.user_nickName}}</view>
+                        </view>
                     </view>
                 </navigator>
             </view>
@@ -80,14 +79,17 @@
                     <view class="achievement-title-text">{{item.title}}</view>
                     <view class="achievement-title-difficulty">{{category_array[item.category]}}</view>
                 </view>
-                <view class="achievement-desc">人数:{{item.attendCount}}/{{item.count}}</view>
-                <view class="achievement-time">{{item.expiredAt}}到期</view>
-                <view class="achievement-owner">
-                    <image class="owner-photo" src="{{item.user_avatarUrl}}"></image>
-                    <view class="owner-name">{{item.user_nickName}}</view>
+                <view class="achievement-desc">人数: {{item.attendCount}}/{{item.count}}</view>
+                <view class="achievement-owner-section">
+                    <view class="achievement-time">{{item.expiredAt}}到期</view>
+                    <view class="achievement-owner">
+                        <image class="owner-photo" src="{{item.user_avatarUrl}}"></image>
+                        <view class="owner-name">{{item.user_nickName}}</view>
+                    </view>
                 </view>
             </navigator>
         </view>
-    </view>    
+    </view>
+    <view style="height:5rem"></view>
     <navigator url="../publisher/publisher"><view class="publisher-button">+</view></navigator>
 </view>

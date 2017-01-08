@@ -16,5 +16,5 @@ App({
     globalData:{
         user:null
     },
-    category_array: ['未指定类型','饭局', '游戏', '拼单']
+    category_array: ['默认分类','饭局', '游戏', '拼单']
 })
