@@ -5,10 +5,11 @@
         "pages/message/message",
         "pages/profile/profile",
         "pages/detail/detail",
-        "pages/join/join"
+        "pages/join/join",
+        "pages/more/more"
     ],
     "window": {
-        "navigationBarTitleText": "成就"
+        "navigationBarTitleText": "开局啦"
     },
     "debug":true
 }

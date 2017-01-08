@@ -1,0 +1,11 @@
+<!--profile.wxml-->
+<view class="container">
+	<view class="title">{{kevent.title}}</view>
+	<view wx:if="{{!hasContent}}" class="hint">没有更多的补充信息</view>
+ 	<view class="image-section">
+ 		<image class="more-image" src="{{kevent.tempFilePaths}}" background-size="cover"></image>
+ 	</view>
+ 	<view class="desc-section">
+ 		<text class="user-motto">{{kevent.description}}</text>
+ 	</view>
+ </view>

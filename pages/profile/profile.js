@@ -1,8 +1,16 @@
 const AV = require('../../utils/av-weapp.js')
 var app = getApp()
 Page({
-   onLoad: function () {
+    data: {
+        id: '',
+        user: {},
+        motto: "男，北京",
+        loading: false,
+        gender: ['性别未知','男','女']
+    },
+   onLoad: function (params) {
         var that = this
+        this.setData({id: params.id})
         const user = AV.User.current();
         wx.getUserInfo({
             success: ({userInfo}) => {
@@ -14,5 +22,13 @@ Page({
                 }).catch(console.error);
             }
         });
+    },
+    onShow: function () {
+        var that = this
+        new AV.Query('User')
+            .get(that.data.id)
+            .then(user => that.setData({                
+                user: user
+            }))
     }
 })

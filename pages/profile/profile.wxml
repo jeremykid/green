@@ -1,3 +1,10 @@
-<view class="">
-    test
+<!--profile.wxml-->
+<view class="container">
+  <view class="userinfo">
+    <image class="userinfo-avatar" src="{{user.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{user.nickName}}</text>
+  </view>
+  <view class="usermotto">
+    <text class="user-motto">{{gender[user.gender]}}, {{user.country}}, {{user.province}}</text>
+  </view>
 </view>

@@ -1,6 +1,6 @@
 <view class="container">
     <loading hidden="{{!loading}}">处理中</loading>
-    <view class="kevent-body kevent-body{{kevent.category}}">
+    <navigator class="kevent-body kevent-body{{kevent.category}}" url="../more/more?id={{kevent.objectId}}">
         <view class="kevent-title">
             <view class="kevent-title-text">{{kevent.title}}</view>
             <view class="kevent-title-difficulty">{{category_array[kevent.category]}}</view>
@@ -10,7 +10,7 @@
         <view class="kevent-desc">参与人数: {{kevent.attendCount}}/{{kevent.count}}</view>
         <!--<view class="kevent-time">已发布: {{day_count}}天</view>-->
         <view class="kevent-time">{{expiredAt}}到期</view>
-    </view>
+    </navigator>
     <view class="owner-section">
         <navigator url="../profile/profile?id={{kevent_owner_id}}"><image class="head-photo" src="{{kevent_owner_avatarUrl}}"></image></navigator>
         <view class="head-name">

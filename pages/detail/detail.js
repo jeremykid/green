@@ -182,12 +182,12 @@ Page({
         console.log('tapJoin');
         wx.navigateTo({url:"/pages/join/join?kevent_id="+this.data.kevent.id})
     },    
-    onShareAppMessage: function () {        
+    onShareAppMessage: function () {
+        var that = this;      
         return {
-            title: this.data.kevent.title,
-            desc: this.data.kevent.category,
-            path: '/pages/join/join?kevent_id='+this.data.kevent.id
-
+            title: "开局啦",
+            desc: that.data.kevent.get('title'),
+            path: '/pages/detail/detail?id='+this.data.kevent.id
         }
     }
 })
