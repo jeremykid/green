@@ -161,11 +161,19 @@ Page({
             wx.getLocation( {
                 success: function( res ) {
                     console.log( res )
-                    that.setData( {
+                    that.setData({
                         submitEnabled: true,
                         hasLocation: true,
                         locLongitude: res.longitude,
                         locLatitude: res.latitude                
+                    })
+                },
+                fail: function() {
+                    that.setData({
+                        submitEnabled: true,
+                        hasLocation: false,
+                        locLongitude: -1000,
+                        locLatitude: -1000
                     })
                 }
             }); 

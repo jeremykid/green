@@ -177,6 +177,11 @@ Page({
                     }
                 })
                 that.fetchNearbyKevents(res.longitude, res.latitude)                
+            },
+            fail: function() {
+                that.setData({
+                    hasLocation: false,
+                })
             }
         });
     }
