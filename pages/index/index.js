@@ -20,7 +20,8 @@ Page({
         hasLocation:false,
         location:{}
     },
-    onLoad: function () {
+    
+    onLoad: function () {        
         var that = this
         const user = AV.User.current();
 
@@ -34,11 +35,30 @@ Page({
                 }).then(that.setData({userInfo:user.toJSON(),category_array: app.category_array})
 ).catch(console.error);
             }
+        });    
+
+        //这里查附近的局        
+        wx.getLocation({
+            success: function( res ) {
+                console.log( res )
+                that.setData({
+                    hasLocation: true,
+                    location: {
+                        longitude: res.longitude,
+                        latitude: res.latitude
+                    }
+                })
+                that.fetchNearbyKevents(res.longitude, res.latitude)                
+            }
         });
+               
     },
-    onShow:function () {
+    onShow:function () {        
         var that = this;
-        that.setData({loading:true, loading_count:3});
+        that.setData({loading:true, loading_count:3});                                              
+
+        that.fetchNearbyKevents(that.data.location.longitude, that.data.location.latitude)
+
         //这里是查自己开的局
         new AV.Query('Kevent') 
             .equalTo('isDeleted',0)//.greaterThan('expiredAt', new Date())
@@ -67,7 +87,7 @@ Page({
             })
             .catch(function(error){
                 console.error;that.setData({loading:false})
-            });
+            });        
 
         //这里查参加的局
         new AV.Query('Attendee') 
@@ -110,22 +130,8 @@ Page({
             .catch(function(error){
                 console.error
                 that.setData({loading:false})
-            });
-
-        //这里查附近的局
-        wx.getLocation({
-            success: function( res ) {
-                console.log( res )
-                that.setData({
-                    hasLocation: true,
-                    location: {
-                        longitude: res.longitude,
-                        latitude: res.latitude
-                    }
-                })
-                that.fetchNearbyKevents(res.longitude, res.latitude)
-            }
-        });
+            }); 
+              
     },
 
     fetchNearbyKevents: function(longitude, latitude) {
