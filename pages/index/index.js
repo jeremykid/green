@@ -1,8 +1,8 @@
 const AV = require('../../utils/av-weapp.js')
 var util = require('../../utils/util.js')
 var app = getApp()
-const LONGITUDE_RANGE = 10
-const LATITUDE_RANGE = 20
+const LONGITUDE_RANGE = 1
+const LATITUDE_RANGE = 2
 Page({
     data: {
         category_array: [],
@@ -12,7 +12,7 @@ Page({
         userInfo: {},
         title: 'title',
         loading: false,
-        loading_count: 3,
+        loading_count: 2,
         my_kevents_count: 0,
         my_attended_count: 0,
         nearby_kevents_count: 0,
@@ -36,27 +36,11 @@ Page({
 ).catch(console.error);
             }
         });    
-
-        //这里查附近的局        
-        wx.getLocation({
-            success: function( res ) {
-                console.log( res )
-                that.setData({
-                    hasLocation: true,
-                    location: {
-                        longitude: res.longitude,
-                        latitude: res.latitude
-                    }
-                })
-                that.fetchNearbyKevents(res.longitude, res.latitude)                
-            }
-        });
                
     },
     onShow:function () {        
         var that = this;
-        that.setData({loading:true, loading_count:3});                                              
-
+        that.setData({loading:true, loading_count:3, hasLocation:false});                                              
         that.fetchNearbyKevents(that.data.location.longitude, that.data.location.latitude)
 
         //这里是查自己开的局
@@ -166,9 +150,8 @@ Page({
                 that.setData({ 
                     nearby_kevents: nearby_event_array, 
                     nearby_kevents_count: nearby_event_array.length,
-                    loading_count: that.data.loading_count-1 
+                    loading: false
                 });
-                if (that.data.loading_count < 1) {that.setData({loading: false})}
                 console.log(".................................................")
                 console.log("nearby:"+kevents.length)
             })
@@ -176,5 +159,25 @@ Page({
                 console.error
                 that.setData({loading:false})
             })
-    } 
+    },
+
+    //这里查附近的局 
+    tapOpenLBS: function() {
+        var that = this;
+        that.setData({loading: true})
+        console.log("open LBS")       
+        wx.getLocation({
+            success: function( res ) {
+                console.log( res )
+                that.setData({
+                    hasLocation: true,
+                    location: {
+                        longitude: res.longitude,
+                        latitude: res.latitude
+                    }
+                })
+                that.fetchNearbyKevents(res.longitude, res.latitude)                
+            }
+        });
+    }
 })

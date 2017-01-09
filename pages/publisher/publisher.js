@@ -18,7 +18,8 @@ Page({
         tempFilePaths: '',
         showMore: false,
         locLongitude: -1000,
-        locLatitude: -1000        
+        locLatitude: -1000,
+        submitEnabled: true       
     },
     onLoad: function(params) {
         var that = this
@@ -156,10 +157,12 @@ Page({
         var that = this
         console.log('开关发生改变，携带值为', e.detail.value)
         if (e.detail.value) {
+            that.setData({submitEnabled:false})
             wx.getLocation( {
                 success: function( res ) {
                     console.log( res )
                     that.setData( {
+                        submitEnabled: true,
                         hasLocation: true,
                         locLongitude: res.longitude,
                         locLatitude: res.latitude                

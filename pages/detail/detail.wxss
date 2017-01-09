@@ -35,14 +35,14 @@
 }
 
 .kevent-title-text {
-    width:85%;
+    width:90%;
     font-size:17pt;
     margin-top:0;
 }
 
 .kevent-title-difficulty {
     text-align:right;
-    width:15%;
+    width:10%;
     font-size:10pt;
     color:rgba(255,255,255,0.3);
     margin-top:10rpx;

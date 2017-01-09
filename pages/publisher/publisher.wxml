@@ -59,8 +59,9 @@
                 </view>
             </view>
             <view class="btn-area">
-                <button formType="submit" type="primary">保存</button>
+                <button formType="submit" type="primary" disabled="{{!submitEnabled}}">保存</button>
             </view> 
         </form>
+        <view style="height:5rem"></view>
     </view>
 </view>
